@@ -3,8 +3,9 @@
 Fracture 论文的交互式研究网站。围绕 **Can adaptation substitute for model scale?** 展示任务、方法、模型版本、成本和诊断证据。
 
 - 网站名：**Fracture Atlas**
-- 仓库名：**fracture-atlas**
-- 建议远端：`AetherHeart-AI/fracture-atlas`（尚未创建或推送）
+- 仓库名：**Fracture-Atlas**（本地目录与 npm 包名为 `fracture-atlas`）
+- 网站仓库：[stueam/Fracture-Atlas](https://github.com/stueam/Fracture-Atlas)
+- Git 远端：`git@github.com:stueam/Fracture-Atlas.git`，分支为 `main`。
 - 默认语言：英文；文案与任务描述集中在页面和 `src/data.ts`。
 - 技术栈：React、TypeScript、Vite，原生 SVG 图表，静态 JSON 数据。
 
@@ -61,6 +62,6 @@ python scripts/sync_data.py --repo C:\path\to\Fracture --ref COMMIT_SHA
 
 `src/pages/` 放页面，`src/components/` 放公共 UI，`src/data.ts` 放类型、任务元数据与匹配逻辑，`scripts/` 放数据导入和校验。
 
-采用 hash 路由和相对资源路径，可部署到 GitHub Pages 子目录或其他静态托管服务。首次部署前设置正式域名、社交预览元信息和研究资源访问策略。当前只初始化本地项目，未创建远端仓库或公开发布。字体通过 Google Fonts 加载；网络不可用时使用系统字体。
+采用 hash 路由和相对资源路径，可部署到 GitHub Pages 子目录或其他静态托管服务。首次部署前设置正式域名、社交预览元信息和研究资源访问策略。网站代码关联到上述独立仓库，线上站点尚未部署。字体通过 Google Fonts 加载；网络不可用时使用系统字体。
 
 后续细化事项见 `docs/ROADMAP.md`。
