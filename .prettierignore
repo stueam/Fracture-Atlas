@@ -1,0 +1,5 @@
+node_modules/
+dist/
+public/data/
+public/paper.pdf
+package-lock.json
