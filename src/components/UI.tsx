@@ -19,8 +19,8 @@ export function Logo({ small = false }: { small?: boolean }) {
     <a className={`brand ${small ? 'small' : ''}`} href="#/" aria-label="Fracture Atlas home">
       <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
         <rect width="40" height="40" rx="9" fill="currentColor" />
-        <path d="M11 11h18v7H18v11h-7z" fill="#e5f1a0" />
-        <path d="M22 22h7v7h-7z" fill="#ed7651" />
+        <path d="M11 11h18v7H18v11h-7z" fill="var(--paper)" />
+        <path d="M22 22h7v7h-7z" fill="var(--accent)" />
       </svg>
       <span>
         Fracture<span className="brand-light"> Atlas</span>

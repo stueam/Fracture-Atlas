@@ -1,11 +1,11 @@
 export const MODELS = ['Qwen3-8B', 'Qwen3.6-27B', 'Qwen3.8-27B'] as const
 export const METHODS = ['ICL', 'SkillOpt', 'SFT', 'RL', 'TTT'] as const
 export const METHOD_COLORS: Record<string, string> = {
-  ICL: '#63875f',
-  SkillOpt: '#4f81a3',
-  SFT: '#d46845',
-  RL: '#9181ac',
-  TTT: '#b59a3f',
+  ICL: 'var(--method-icl)',
+  SkillOpt: 'var(--method-skillopt)',
+  SFT: 'var(--method-sft)',
+  RL: 'var(--method-rl)',
+  TTT: 'var(--method-ttt)',
 }
 export const METHOD_NAMES: Record<string, string> = {
   ICL: 'In-context learning',

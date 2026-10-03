@@ -53,7 +53,7 @@ function CostScatter({
             x2={right}
             y1={y(t * maxScore)}
             y2={y(t * maxScore)}
-            stroke="#e1e4dc"
+            stroke="var(--line)"
             strokeDasharray="4 5"
           />
           <text x={left - 13} y={y(t * maxScore) + 4} textAnchor="end" className="plot-tick">
@@ -63,7 +63,7 @@ function CostScatter({
       ))}
       {ticks.map((t) => (
         <g key={t}>
-          <line x1={x(t)} x2={x(t)} y1={top} y2={bottom} stroke="#edf0e8" />
+          <line x1={x(t)} x2={x(t)} y1={top} y2={bottom} stroke="var(--grid)" />
           <text x={x(t)} y={bottom + 24} textAnchor="middle" className="plot-tick">
             ${t}
           </text>
@@ -99,7 +99,7 @@ function CostScatter({
             cy={y(r.value)}
             r="7"
             fill={METHOD_COLORS[r.method]}
-            stroke="white"
+            stroke="var(--surface)"
             strokeWidth="2"
           />
           <text

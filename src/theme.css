@@ -1,0 +1,77 @@
+/* Shared semantic colors. Component styles never depend on a fixed theme. */
+:root {
+  color-scheme: light;
+  --paper: #f5f7fa;
+  --surface: #ffffff;
+  --surface-soft: #edf2f7;
+  --ink: #172332;
+  --muted: #526479;
+  --line: #d5dfe9;
+  --line-strong: #8b9db1;
+  --grid: #e2e8ef;
+  --accent: #b94c29;
+  --green: var(--success);
+  --success: #287b6d;
+  --success-soft: #e5f2ed;
+  --warning-soft: #faf0e5;
+  --hover: #e6edf5;
+  --selected: #e2ebf5;
+  --focus-soft: #b9ccdf;
+  --primary: #203247;
+  --primary-hover: #344e69;
+  --primary-ink: #ffffff;
+  --header-surface: #f5f7faed;
+  --shadow: #17233214;
+  --overlay: #13223866;
+  --series-baseline: #647286;
+  --series-adapted: var(--accent);
+  --series-kimi: #278575;
+  --series-deepseek: #7961ad;
+  --method-icl: #287b6d;
+  --method-skillopt: #397da9;
+  --method-sft: var(--accent);
+  --method-rl: #7961ad;
+  --method-ttt: #96701d;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #0c121d;
+  --surface: #121d2b;
+  --surface-soft: #172333;
+  --ink: #f1f5fb;
+  --muted: #a5b4c7;
+  --line: #2c3c50;
+  --line-strong: #71849b;
+  --grid: #243246;
+  --accent: #ff936a;
+  --success: #6ad4c0;
+  --success-soft: #15362f;
+  --warning-soft: #352b20;
+  --hover: #213247;
+  --selected: #25374c;
+  --focus-soft: #56718f;
+  --primary: #dce8f7;
+  --primary-hover: #ffffff;
+  --primary-ink: #132033;
+  --header-surface: #0c121ded;
+  --shadow: #00000040;
+  --overlay: #03070bb3;
+  --series-baseline: #acb9cd;
+  --series-kimi: #6ad4c0;
+  --series-deepseek: #b29be7;
+  --method-icl: #6ad4c0;
+  --method-skillopt: #79b8e8;
+  --method-rl: #b29be7;
+  --method-ttt: #dfbd6a;
+}
+
+input,
+select {
+  color: var(--ink);
+}
+
+input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}

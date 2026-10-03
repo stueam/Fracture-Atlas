@@ -5,10 +5,10 @@ import { BENCHMARKS, MODELS, metricValue, overviewFor } from '../data'
 import type { Benchmark, Study } from '../data'
 
 const series = [
-  { key: 'base', label: 'Target baseline', color: '#5d6959' },
-  { key: 'adapted', label: 'Best tested adaptation', color: '#b95435' },
-  { key: 'kimi', label: 'Kimi K3', color: '#477665' },
-  { key: 'deepseek', label: 'DS v4 Pro', color: '#74619a' },
+  { key: 'base', label: 'Target baseline', color: 'var(--series-baseline)' },
+  { key: 'adapted', label: 'Best tested adaptation', color: 'var(--series-adapted)' },
+  { key: 'kimi', label: 'Kimi K3', color: 'var(--series-kimi)' },
+  { key: 'deepseek', label: 'DS v4 Pro', color: 'var(--series-deepseek)' },
 ] as const
 
 function taskValues(data: Study, task: string, model: string) {
