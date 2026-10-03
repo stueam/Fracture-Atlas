@@ -103,7 +103,13 @@ export function Footer({ data }: { data?: Study }) {
       </div>
       <div className="footer-bottom">
         <span>
-          {data ? <>Paper snapshot · {data.snapshotDate} · <code>{data.commit.slice(0, 7)}</code></> : 'Aetherheart · Research & community'}
+          {data ? (
+            <>
+              Paper snapshot · {data.snapshotDate} · <code>{data.commit.slice(0, 7)}</code>
+            </>
+          ) : (
+            'Aetherheart · Research & community'
+          )}
         </span>
         <span>Fracture Atlas · v0.1</span>
       </div>

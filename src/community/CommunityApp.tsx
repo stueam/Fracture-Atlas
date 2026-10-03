@@ -1,5 +1,7 @@
+import { Account } from './Auth'
 import { PageIntro } from '../components/UI'
 export default function CommunityApp({ path }: { path: string }) {
+  if (path === '/account' || path === '/account/security') return <Account />
   return (
     <>
       <PageIntro
