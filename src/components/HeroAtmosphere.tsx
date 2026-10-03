@@ -25,6 +25,14 @@ export default function HeroAtmosphere() {
       <div className="hero-ambient-field">
         <div className="hero-glow hero-glow-cool" />
         <div className="hero-glow hero-glow-warm" />
+        <svg className="hero-flow-mesh" viewBox="0 0 600 440">
+          {Array.from({ length: 15 }, (_, i) => (
+            <path
+              key={i}
+              d={`M ${70 + i * 24} -40 C ${-120 + i * 28} 120, ${480 + i * 12} 180, ${160 + i * 26} 480`}
+            />
+          ))}
+        </svg>
       </div>
       <svg className="fracture-motif" viewBox="0 0 340 320">
         {Array.from({ length: 8 }, (_, i) => (
@@ -49,6 +57,11 @@ export default function HeroAtmosphere() {
           className="fracture-pulse fracture-line-left"
           pathLength="1"
           d="M 10 180 L 80 140 H 136 L 158 107"
+        />
+        <path
+          className="fracture-pulse fracture-pulse-secondary fracture-line-left"
+          pathLength="1"
+          d="M 10 255 L 80 215 H 136 L 158 182"
         />
         <path
           className="fracture-pulse fracture-pulse-warm fracture-line-right"

@@ -120,36 +120,57 @@ p {
   inset: 0;
   /* Keep the reading column quiet and fade out before the statistics/chart. */
   mask-image:
-    linear-gradient(90deg, transparent 40%, black 78%),
+    linear-gradient(90deg, transparent 48%, black 82%),
     linear-gradient(transparent, black 25%, black 60%, transparent 100%);
   mask-composite: intersect;
 }
 .hero-glow {
   position: absolute;
-  width: 520px;
-  height: 380px;
+  width: 620px;
+  height: 430px;
   right: -80px;
   top: -40px;
   opacity: var(--ambient-strength);
   background: radial-gradient(ellipse, var(--ambient-cool), transparent 68%);
-  animation: ambient-drift 32s ease-in-out infinite alternate;
+  animation: ambient-drift 9s ease-in-out infinite alternate;
 }
 .hero-glow-warm {
-  width: 400px;
-  height: 300px;
+  width: 470px;
+  height: 350px;
   right: -140px;
   top: 120px;
   background: radial-gradient(ellipse, var(--ambient-warm), transparent 68%);
-  animation-duration: 38s;
-  animation-delay: -19s;
+  animation-duration: 11s;
+  animation-delay: -5.5s;
   animation-direction: alternate-reverse;
 }
 @keyframes ambient-drift {
   from {
-    transform: translate(-35px, 15px) scale(0.92);
+    transform: translate(-110px, 45px) scale(0.85);
   }
   to {
-    transform: translate(25px, -20px) scale(1.08);
+    transform: translate(45px, -60px) scale(1.12);
+  }
+}
+.hero-flow-mesh {
+  position: absolute;
+  width: 600px;
+  height: 440px;
+  right: -100px;
+  top: -10px;
+  fill: none;
+  stroke: var(--ambient-cool);
+  stroke-width: 1;
+  opacity: var(--ambient-mesh-strength);
+  transform-origin: 70% 50%;
+  animation: ambient-flow 10s ease-in-out infinite alternate;
+}
+@keyframes ambient-flow {
+  from {
+    transform: translate(-25px, -30px) rotate(-9deg) scale(0.95);
+  }
+  to {
+    transform: translate(20px, 25px) rotate(9deg) scale(1.08);
   }
 }
 .fracture-motif {
@@ -182,37 +203,49 @@ p {
   fill: var(--series-kimi);
 }
 .fracture-motif .fracture-pulse {
-  stroke-width: 2;
+  stroke-width: 2.5;
   stroke-linecap: round;
-  stroke-dasharray: 0.045 0.955;
+  stroke-dasharray: 0.12 0.88;
   stroke-dashoffset: 1;
   opacity: 0;
-  animation: fracture-travel 16s linear infinite;
+  animation: fracture-travel 6s linear infinite;
   animation-delay: -2s;
 }
 .fracture-motif .fracture-pulse-warm {
-  animation-delay: -10s;
+  animation-delay: -4s;
+}
+.fracture-motif .fracture-pulse-secondary {
+  animation-delay: 0s;
 }
 @keyframes fracture-travel {
   0% {
     stroke-dashoffset: 1;
     opacity: 0;
   }
-  6% {
+  10% {
     opacity: var(--ambient-pulse-strength);
   }
-  32% {
+  65% {
     opacity: var(--ambient-pulse-strength);
   }
-  40%,
+  85%,
   100% {
     stroke-dashoffset: 0;
     opacity: 0;
   }
 }
 .hero-atmosphere[data-running='false'] .hero-glow,
+.hero-atmosphere[data-running='false'] .hero-flow-mesh,
 .hero-atmosphere[data-running='false'] .fracture-pulse {
   animation-play-state: paused;
+}
+@media (max-width: 600px) {
+  .hero-ambient-field {
+    opacity: 0.5;
+    mask-image:
+      linear-gradient(90deg, transparent 65%, black),
+      linear-gradient(transparent, black 25%, black 60%, transparent);
+  }
 }
 .overview-kicker,
 .overview-hero h1,
