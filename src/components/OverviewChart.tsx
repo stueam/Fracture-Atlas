@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { ArrowRight, ChevronDown, Info } from 'lucide-react'
 import { BENCHMARKS, MODELS, metricValue, overviewFor } from '../data'
 import type { Benchmark, Study } from '../data'
+import PointTooltip from './PointTooltip'
+import type { PointDetails } from './PointTooltip'
 
 const series = [
   { key: 'base', label: 'Target baseline', color: 'var(--series-baseline)' },
@@ -10,6 +12,18 @@ const series = [
   { key: 'kimi', label: 'Kimi K3', color: 'var(--series-kimi)' },
   { key: 'deepseek', label: 'DS v4 Pro', color: 'var(--series-deepseek)' },
 ] as const
+
+type Series = (typeof series)[number]
+interface PointInteraction {
+  activePoint: PointDetails | null
+  showPoint: (
+    anchor: HTMLButtonElement,
+    benchmark: Benchmark,
+    series: Series,
+    value: number,
+  ) => void
+  hidePoint: (anchor: HTMLButtonElement) => void
+}
 
 function taskValues(data: Study, task: string, model: string) {
   const record = overviewFor(data, task, model)
@@ -28,6 +42,7 @@ function PlotTrack({
   references,
   select,
   native = false,
+  interaction,
 }: {
   data: Study
   benchmark: Benchmark
@@ -35,12 +50,17 @@ function PlotTrack({
   references: boolean
   select: () => void
   native?: boolean
+  interaction: PointInteraction
 }) {
   const values = taskValues(data, benchmark.name, model)
   const max = native
     ? Math.max(0.001, ...Object.values(values).filter((v): v is number => v !== null)) * 1.08
     : 100
-  const visibleSeries = series.filter((s) => references || s.key === 'base' || s.key === 'adapted')
+  const activeSeries =
+    interaction.activePoint?.benchmark === benchmark.name
+      ? (interaction.activePoint.series as Series['key'])
+      : null
+  const activeValue = activeSeries ? values[activeSeries] : null
   return (
     <div
       className={`atlas-track ${native ? 'native' : ''}`}
@@ -49,23 +69,44 @@ function PlotTrack({
       {[0, 25, 50, 75, 100].map((tick) => (
         <i className="atlas-gridline" key={tick} style={{ left: `${tick}%` }} />
       ))}
-      {visibleSeries.map((s) => {
+      {activeValue !== null && (
+        <i
+          className="atlas-point-guide"
+          aria-hidden="true"
+          style={{ left: `${Math.max(0, Math.min(100, (activeValue / max) * 100))}%` }}
+        />
+      )}
+      {series.map((s) => {
         const value = values[s.key]
         if (value === null) return null
+        const hidden = !references && (s.key === 'kimi' || s.key === 'deepseek')
+        const active = activeSeries === s.key
         return (
           <button
             key={s.key}
             type="button"
-            className={`atlas-marker ${s.key}`}
+            className={`atlas-marker ${s.key} ${hidden ? 'is-hidden' : ''} ${active ? 'is-active' : ''}`}
             style={
               {
                 left: `${Math.max(0, Math.min(100, (value / max) * 100))}%`,
                 '--series-color': s.color,
               } as CSSProperties
             }
-            title={`${benchmark.name} · ${s.label}: ${metricValue(value, benchmark.name)}${native ? ' quality' : '%'}`}
             aria-label={`${benchmark.name}, ${s.label}, ${metricValue(value, benchmark.name)}`}
-            onClick={select}
+            aria-hidden={hidden || undefined}
+            aria-describedby={active ? 'atlas-point-tooltip' : undefined}
+            tabIndex={hidden ? -1 : 0}
+            disabled={hidden}
+            onPointerEnter={(e) => interaction.showPoint(e.currentTarget, benchmark, s, value)}
+            onPointerLeave={(e) => {
+              if (document.activeElement !== e.currentTarget) interaction.hidePoint(e.currentTarget)
+            }}
+            onFocus={(e) => interaction.showPoint(e.currentTarget, benchmark, s, value)}
+            onBlur={(e) => interaction.hidePoint(e.currentTarget)}
+            onClick={(e) => {
+              select()
+              interaction.showPoint(e.currentTarget, benchmark, s, value)
+            }}
           >
             <span />
           </button>
@@ -85,6 +126,39 @@ export default function OverviewChart({ data }: { data: Study }) {
   const [model, setModel] = useState<string>(MODELS[0])
   const [references, setReferences] = useState(true)
   const [selected, setSelected] = useState('LiveMath')
+  const [activePoint, setActivePoint] = useState<PointDetails | null>(null)
+  useEffect(() => {
+    const dismiss = () => setActivePoint(null)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss()
+    }
+    const onPointer = (e: PointerEvent) => {
+      if (!(e.target instanceof Element) || !e.target.closest('.atlas-marker')) dismiss()
+    }
+    window.addEventListener('scroll', dismiss, true)
+    window.addEventListener('resize', dismiss)
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onPointer)
+    return () => {
+      window.removeEventListener('scroll', dismiss, true)
+      window.removeEventListener('resize', dismiss)
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onPointer)
+    }
+  }, [])
+  const interaction: PointInteraction = {
+    activePoint,
+    showPoint: (anchor, benchmark, s, value) =>
+      setActivePoint({
+        anchor,
+        benchmark: benchmark.name,
+        series: s.key,
+        label: s.label,
+        score: metricValue(value, benchmark.name),
+        unit: benchmark.scope === 'Discovery' ? 'quality' : '%',
+      }),
+    hidePoint: (anchor) => setActivePoint((point) => (point?.anchor === anchor ? null : point)),
+  }
   const benchmark = BENCHMARKS.find((b) => b.name === selected)!
   const record = overviewFor(data, selected, model)
   const values = taskValues(data, selected, model)
@@ -107,7 +181,10 @@ export default function OverviewChart({ data }: { data: Study }) {
             <select
               aria-label="Overview model"
               value={model}
-              onChange={(e) => setModel(e.target.value)}
+              onChange={(e) => {
+                setActivePoint(null)
+                setModel(e.target.value)
+              }}
             >
               {MODELS.map((m) => (
                 <option key={m}>{m}</option>
@@ -120,7 +197,10 @@ export default function OverviewChart({ data }: { data: Study }) {
           <input
             type="checkbox"
             checked={references}
-            onChange={(e) => setReferences(e.target.checked)}
+            onChange={(e) => {
+              setActivePoint(null)
+              setReferences(e.target.checked)
+            }}
           />
           <span>Show frontier references</span>
         </label>
@@ -180,6 +260,7 @@ export default function OverviewChart({ data }: { data: Study }) {
                     benchmark={b}
                     model={model}
                     references={references}
+                    interaction={interaction}
                     select={() => setSelected(b.name)}
                   />
                   <button
@@ -226,6 +307,7 @@ export default function OverviewChart({ data }: { data: Study }) {
                 benchmark={b}
                 model={model}
                 references={references}
+                interaction={interaction}
                 select={() => setSelected(b.name)}
                 native
               />
@@ -275,6 +357,7 @@ export default function OverviewChart({ data }: { data: Study }) {
           adaptation gain.
         </span>
       </p>
+      {activePoint && <PointTooltip point={activePoint} />}
     </section>
   )
 }

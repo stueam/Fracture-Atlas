@@ -488,6 +488,71 @@ p {
   align-items: center;
   justify-content: center;
   z-index: 2;
+  transition:
+    left 350ms ease-out,
+    opacity 160ms ease-out;
+  animation: atlas-point-enter 160ms ease-out;
+}
+.atlas-marker.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    left 350ms ease-out,
+    opacity 160ms ease-out,
+    visibility 0s 160ms;
+}
+.atlas-marker.is-active > span {
+  box-shadow: 0 0 0 3px var(--focus-soft);
+}
+.atlas-point-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px dashed var(--line-strong);
+  pointer-events: none;
+}
+.atlas-point-tooltip {
+  position: fixed;
+  z-index: 90;
+  pointer-events: none;
+  width: max-content;
+  max-width: min(300px, calc(100vw - 24px));
+  padding: 14px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 8px 28px var(--shadow);
+}
+.atlas-point-tooltip strong,
+.atlas-point-tooltip > span {
+  display: block;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.atlas-point-tooltip > span {
+  color: var(--muted);
+  margin: 2px 0 6px;
+}
+.atlas-point-tooltip b {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.atlas-point-tooltip small {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 6px;
+  color: var(--muted);
+}
+@keyframes atlas-point-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .atlas-marker > span {
   width: 10px;
