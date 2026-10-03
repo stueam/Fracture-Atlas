@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import ThemeToggle from './ThemeToggle'
+import MethodSymbol from './MethodSymbol'
 import { ArrowUpRight, Check, ChevronDown, FileText, Info, X } from 'lucide-react'
 import {
   MODELS,
-  METHOD_COLORS,
   METHOD_NAMES,
   assetUrl,
   allocation,
@@ -144,7 +144,9 @@ export function Note({ children, compact = false }: { children: ReactNode; compa
 export function MethodTag({ method }: { method: string }) {
   return (
     <span className="method-tag" title={METHOD_NAMES[method]}>
-      <i style={{ background: METHOD_COLORS[method] }} />
+      <svg viewBox="-10 -10 20 20" width="14" height="14" aria-hidden="true">
+        <MethodSymbol method={method} />
+      </svg>
       {method}
     </span>
   )

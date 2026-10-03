@@ -4,7 +4,6 @@ import {
   BENCHMARKS,
   METHODS,
   MODELS,
-  METHOD_COLORS,
   allocation,
   dollars,
   metricValue,
@@ -15,6 +14,7 @@ import {
 import type { CostRecord, Study } from '../data'
 import { MethodTag, ModelSelect, Note, PageIntro } from '../components/UI'
 import type { Inspection } from '../components/UI'
+import MethodSymbol from '../components/MethodSymbol'
 
 function CostScatter({
   records,
@@ -94,14 +94,9 @@ function CostScatter({
             {r.method} · {dollars(r.total_cost_usd)} · {metricValue(r.value, benchmark)}
           </title>
           <circle cx={x(r.total_cost_usd!)} cy={y(r.value)} r="17" fill="transparent" />
-          <circle
-            cx={x(r.total_cost_usd!)}
-            cy={y(r.value)}
-            r="7"
-            fill={METHOD_COLORS[r.method]}
-            stroke="var(--surface)"
-            strokeWidth="2"
-          />
+          <g transform={`translate(${x(r.total_cost_usd!)}, ${y(r.value)})`}>
+            <MethodSymbol method={r.method} />
+          </g>
           <text
             x={x(r.total_cost_usd!) + (i % 2 ? -13 : 13)}
             y={y(r.value) - 13}

@@ -207,13 +207,13 @@ p {
   opacity: 0.5;
 }
 .fracture-line-left {
-  stroke: var(--series-kimi);
+  stroke: var(--ambient-cool);
 }
 .fracture-line-right {
   stroke: var(--accent);
 }
 .fracture-motif circle {
-  fill: var(--series-kimi);
+  fill: var(--ambient-cool);
 }
 .fracture-motif .fracture-pulse {
   stroke-width: 2.5;
@@ -347,7 +347,7 @@ p {
 }
 .overview-hero h1 em {
   font-style: normal;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .overview-hero > p {
   font-size: 18px;
@@ -454,6 +454,15 @@ p {
 .atlas-legend i.adapted {
   border-radius: 2px;
   transform: rotate(45deg);
+}
+.atlas-legend i.kimi,
+.atlas-marker.kimi > span {
+  border: 1.5px solid var(--series-outline);
+  border-radius: 1px;
+}
+.atlas-legend i.deepseek,
+.atlas-marker.deepseek > span {
+  border: 1px solid var(--series-outline);
 }
 .atlas-chart-panel {
   border: 1px solid var(--line);
@@ -569,14 +578,14 @@ p {
 }
 .atlas-task-label:hover strong,
 .atlas-discovery-label:hover strong {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .atlas-endpoint {
   text-align: right;
 }
 .atlas-endpoint > strong {
   font-family: 'Space Grotesk', sans-serif;
-  color: var(--accent);
+  color: var(--accent-text);
   font-size: 20px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
@@ -754,7 +763,7 @@ p {
 .atlas-discovery-label b {
   font-size: 17px;
   margin-left: 6px;
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 550;
 }
 .atlas-track.native {
@@ -883,7 +892,7 @@ p {
   border-radius: 9px;
 }
 .theme-toggle .active {
-  color: var(--accent);
+  color: var(--accent-text);
   background: var(--surface);
   box-shadow: 0 1px 4px var(--shadow);
 }
@@ -982,7 +991,7 @@ p {
   gap: 8px;
 }
 .text-link:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .eyebrow {
   display: flex;
@@ -1413,7 +1422,7 @@ tbody tr:hover {
   color: var(--muted);
 }
 .benchmark-name:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .result-table td:first-child small {
   display: block;
@@ -1811,8 +1820,8 @@ tbody tr:hover {
   cursor: pointer;
   outline: none;
 }
-.scatter-point:hover circle:nth-of-type(2),
-.scatter-point:focus circle:nth-of-type(2) {
+.scatter-point:hover .method-symbol,
+.scatter-point:focus .method-symbol {
   stroke: var(--ink);
   stroke-width: 3;
 }
@@ -2558,7 +2567,7 @@ tbody tr:hover {
   width: 32px;
   height: 32px;
   border: 2px solid var(--line);
-  border-top-color: var(--accent);
+  border-top-color: var(--accent-text);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
