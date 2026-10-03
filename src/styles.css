@@ -570,9 +570,45 @@ p {
   min-height: 84px;
   padding: 16px 40px;
   display: flex;
-  gap: 26px;
+  gap: 18px;
   align-items: center;
   justify-content: space-between;
+}
+.theme-toggle {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 4px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-soft);
+  color: var(--muted);
+}
+.theme-toggle span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+}
+.theme-toggle .active {
+  color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 1px 4px var(--shadow);
+}
+@media (max-width: 1100px) {
+  .header-inner {
+    flex-wrap: wrap;
+  }
+  .header-inner .brand {
+    flex: 1;
+  }
+  .header-inner nav {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+  }
 }
 .brand {
   display: inline-flex;

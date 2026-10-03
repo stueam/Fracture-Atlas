@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
+import ThemeToggle from './ThemeToggle'
 import { ArrowUpRight, Check, ChevronDown, FileText, Info, X } from 'lucide-react'
 import {
   MODELS,
@@ -55,6 +56,7 @@ export function Header({ path }: { path: string }) {
             </a>
           ))}
         </nav>
+        <ThemeToggle />
       </div>
     </header>
   )
