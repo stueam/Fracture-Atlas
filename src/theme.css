@@ -32,6 +32,10 @@
   --method-sft: var(--accent);
   --method-rl: #7961ad;
   --method-ttt: #96701d;
+  --ambient-cool: var(--series-kimi);
+  --ambient-warm: var(--accent);
+  --ambient-strength: 0.13;
+  --ambient-pulse-strength: 0.55;
 }
 
 :root[data-theme='dark'] {
@@ -64,6 +68,8 @@
   --method-skillopt: #79b8e8;
   --method-rl: #b29be7;
   --method-ttt: #dfbd6a;
+  --ambient-strength: 0.1;
+  --ambient-pulse-strength: 0.45;
 }
 
 input,
