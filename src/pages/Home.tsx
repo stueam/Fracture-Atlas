@@ -10,7 +10,10 @@ export default function Home({ data }: { data: Study }) {
       <section className="overview-hero">
         <HeroAtmosphere />
         <div className="overview-kicker">
-          <span>Adaptation · Capability · Scale</span>
+          <span className="company-signature">
+            <span lang="zh-CN">以太之心</span>
+            <span>Aetherheart</span>
+          </span>
           <span>Research snapshot · {data.snapshotDate}</span>
         </div>
         <h1>

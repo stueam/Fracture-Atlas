@@ -69,7 +69,10 @@ export function Footer({ data }: { data: Study }) {
         <Logo small />
         <p>
           A map of what adaptation can change.
-          <br />A Fracture research project.
+          <br />
+          <span className="footer-company">
+            <span lang="zh-CN">以太之心</span> Aetherheart
+          </span>
         </p>
       </div>
       <div className="footer-bottom">

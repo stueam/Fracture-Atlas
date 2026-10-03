@@ -326,6 +326,33 @@ p {
   font-weight: 600;
   letter-spacing: 1.5px;
 }
+.overview-kicker .company-signature {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 17px;
+  letter-spacing: 0.4px;
+  color: var(--ink);
+}
+.company-signature::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+}
+.company-signature > span[lang] {
+  letter-spacing: 2px;
+}
+.company-signature > span:last-child {
+  color: var(--accent-text);
+}
+.footer-company {
+  display: inline-block;
+  margin-top: 7px;
+  font-weight: 600;
+  color: var(--ink);
+}
 .overview-hero h1 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(42px, 4.7vw, 64px);
