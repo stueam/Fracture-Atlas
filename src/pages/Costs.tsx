@@ -176,11 +176,13 @@ export default function Costs({
           </span>
         </div>
         {plotted.length ? (
-          <CostScatter
-            records={plotted}
-            benchmark={benchmark}
-            select={(r) => inspect({ kind: 'cost', record: r })}
-          />
+          <div className="cost-chart-scroll">
+            <CostScatter
+              records={plotted}
+              benchmark={benchmark}
+              select={(r) => inspect({ kind: 'cost', record: r })}
+            />
+          </div>
         ) : (
           <div className="empty-state">
             <h3>No aligned cost records to plot.</h3>
