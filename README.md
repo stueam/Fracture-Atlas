@@ -62,6 +62,8 @@ python scripts/sync_data.py --repo C:\path\to\Fracture --ref COMMIT_SHA
 
 `src/pages/` 放页面，`src/components/` 放公共 UI，`src/data.ts` 放类型、任务元数据与匹配逻辑，`scripts/` 放数据导入和校验。
 
-采用 hash 路由和相对资源路径，可部署到 GitHub Pages 子目录或其他静态托管服务。首次部署前设置正式域名、社交预览元信息和研究资源访问策略。网站代码关联到上述独立仓库，线上站点尚未部署。字体通过 Google Fonts 加载；网络不可用时使用系统字体。
+采用 hash 路由，可部署到 GitHub Pages 子目录或其他静态托管服务。仓库包含 `.github/workflows/deploy-pages.yml`，将发布路径设为 `/Fracture-Atlas/`；开启 Pages 后，每次推送 `main` 自动构建并发布。首次配置步骤见 [GitHub Pages 部署说明](docs/GITHUB_PAGES.md)。默认发布地址为 https://stueam.github.io/Fracture-Atlas/ 。
+
+字体通过 Google Fonts 加载；网络不可用时使用系统字体。正式发布时可继续补充自定义域名和社交预览元信息。
 
 后续细化事项见 `docs/ROADMAP.md`。

@@ -11,3 +11,10 @@
 - 原 Fracture 工作区的已有修改与未跟踪文件未被改动。
 
 当前来源外链按固定 Git 提交生成；其可访问性取决于研究仓库权限。网站仓库已关联到 `stueam/Fracture-Atlas`，线上站点尚未部署。
+
+## GitHub Pages 部署准备
+
+- 已添加 `.github/workflows/deploy-pages.yml`，使用 `main` 推送和手动触发。
+- `npm run build -- --base=/Fracture-Atlas/` 构建通过，数据快照校验通过。
+- 本地模拟仓库子路径：主页、构建的 JavaScript、`data/study.json` 与 `paper.pdf` 均返回 HTTP 200；PDF 的 Content-Type 为 `application/pdf`。
+- 首次发布仍需仓库管理员在 Settings → Pages 中选择 GitHub Actions，然后运行工作流。远端部署结果以 Actions 为准。
