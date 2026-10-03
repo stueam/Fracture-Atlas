@@ -33,8 +33,15 @@ jobs:
       - name: Validate the committed research snapshot
         run: python3 scripts/validate_data.py
 
+      - name: Test community permissions and validation
+        run: npm run test:community
+
       - name: Build for the repository's Pages path
         run: npm run build -- --base=/Fracture-Atlas/
+        env:
+          VITE_COMMUNITY_ENABLED: ${{ vars.VITE_COMMUNITY_ENABLED || 'true' }}
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6

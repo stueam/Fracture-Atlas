@@ -67,3 +67,9 @@ python scripts/sync_data.py --repo C:\path\to\Fracture --ref COMMIT_SHA
 字体通过 Google Fonts 加载；网络不可用时使用系统字体。正式发布时可继续补充自定义域名和社交预览元信息。
 
 后续细化事项见 `docs/ROADMAP.md`。
+
+## Community 提交与审核
+
+网站包含独立 Community、三类提交表单、GitHub 登录、私有证据和管理员审核代码。前端继续部署到 GitHub Pages，数据服务采用 Supabase。未配置后端时显示未开放状态，不能保存或提交。
+
+接入顺序、权限初始化和真实验收步骤见 [Community 部署与验收](docs/COMMUNITY_SETUP.md)；设计背景见 [提交系统计划](docs/COMMUNITY_SUBMISSIONS_PLAN.md)。本地运行 `npm run test:community` 验证权限事务与导入校验。
