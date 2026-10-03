@@ -42,18 +42,20 @@ export function Header({ path }: { path: string }) {
   ]
   const items = communityEnabled
     ? [
-        ['/', 'Overview'],
         ['/community', 'Community'],
         ['/paper', 'Paper & resources'],
         ['/submit', 'Submit'],
         ['/account', 'Account'],
       ]
-    : paperItems
+    : paperItems.slice(1)
   return (
     <header className="site-header">
       <div className="header-inner">
         <Logo />
         <nav aria-label="Main navigation">
+          <a href="#/" aria-current={path === '/' ? 'page' : undefined}>
+            Overview
+          </a>
           {communityEnabled && (
             <details className="explore-menu">
               <summary>Explore</summary>
