@@ -136,6 +136,32 @@ export default function Submit({ id }: { id?: string }) {
   const [draftId] = useState(() => id || crypto.randomUUID())
   const [step, setStep] = useState(0)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [leaveTarget, setLeaveTarget] = useState('')
+  const leavePanel = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!leaveTarget) return
+    const previous = document.activeElement as HTMLElement | null
+    const focusable = () =>
+      Array.from(leavePanel.current?.querySelectorAll<HTMLButtonElement>('button') ?? [])
+    focusable()[0]?.focus()
+    const key = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        setLeaveTarget('')
+      }
+      if (e.key === 'Tab') {
+        const buttons = focusable()
+        const index = buttons.indexOf(document.activeElement as HTMLButtonElement)
+        e.preventDefault()
+        buttons[(index + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length]?.focus()
+      }
+    }
+    document.addEventListener('keydown', key, true)
+    return () => {
+      document.removeEventListener('keydown', key, true)
+      previous?.focus()
+    }
+  }, [leaveTarget])
   const [message, setMessage] = useState('')
   const [busy, setBusy] = useState(false)
   const [loaded, setLoaded] = useState(!id)
@@ -174,13 +200,10 @@ export default function Submit({ id }: { id?: string }) {
     }
     const click = (e: MouseEvent) => {
       const a = (e.target as Element)?.closest?.('a')
-      if (
-        dirty &&
-        a &&
-        a.getAttribute('href')?.startsWith('#') &&
-        !window.confirm('Leave this form? Unsaved changes will be lost.')
-      )
+      if (dirty && a && a.getAttribute('href')?.startsWith('#')) {
         e.preventDefault()
+        setLeaveTarget(a.getAttribute('href')!)
+      }
     }
     window.addEventListener('beforeunload', leave)
     document.addEventListener('click', click)
@@ -351,6 +374,34 @@ export default function Submit({ id }: { id?: string }) {
   }
   return (
     <section className="community-page">
+      {leaveTarget && (
+        <div
+          className="community-leave-overlay"
+          ref={leavePanel}
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby="leave-title"
+        >
+          <div className="community-card">
+            <h2 id="leave-title">Leave this form?</h2>
+            <p>Your unsaved changes will be lost.</p>
+            <div className="community-actions">
+              <button autoFocus className="button primary" onClick={() => setLeaveTarget('')}>
+                Keep editing
+              </button>
+              <button
+                className="button secondary"
+                onClick={() => {
+                  setDirty(false)
+                  location.hash = leaveTarget
+                }}
+              >
+                Discard changes and leave
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="community-heading">
         <span className="eyebrow">Contribute to the atlas</span>
         <h1>{id ? 'Edit contribution' : 'Submit a contribution'}</h1>

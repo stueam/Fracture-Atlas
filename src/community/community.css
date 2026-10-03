@@ -1,6 +1,19 @@
 .community-page {
   padding: 46px 0 20px;
 }
+.community-leave-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgb(0 0 0 / 55%);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.community-leave-overlay > .community-card {
+  width: min(520px, 100%);
+  box-shadow: 0 20px 80px rgb(0 0 0 / 20%);
+}
 .community-hero {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
