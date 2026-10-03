@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import ThemeToggle from './ThemeToggle'
+import { communityEnabled } from '../community/config'
 import MethodSymbol from './MethodSymbol'
 import { ArrowUpRight, Check, ChevronDown, FileText, Info, X } from 'lucide-react'
 import {
@@ -31,7 +32,7 @@ export function Logo({ small = false }: { small?: boolean }) {
 }
 
 export function Header({ path }: { path: string }) {
-  const items = [
+  const paperItems = [
     ['/', 'Overview'],
     ['/results', 'Results'],
     ['/benchmarks', 'Benchmarks'],
@@ -39,11 +40,36 @@ export function Header({ path }: { path: string }) {
     ['/diagnostics', 'Diagnostics'],
     ['/paper', 'Paper & resources'],
   ]
+  const items = communityEnabled
+    ? [
+        ['/', 'Overview'],
+        ['/community', 'Community'],
+        ['/paper', 'Paper & resources'],
+        ['/submit', 'Submit'],
+        ['/account', 'Account'],
+      ]
+    : paperItems
   return (
     <header className="site-header">
       <div className="header-inner">
         <Logo />
         <nav aria-label="Main navigation">
+          {communityEnabled && (
+            <details className="explore-menu">
+              <summary>Explore</summary>
+              <div>
+                {paperItems.slice(1, 5).map(([url, label]) => (
+                  <a
+                    key={url}
+                    href={`#${url}`}
+                    onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </details>
+          )}
           {items.map(([url, label]) => (
             <a
               key={url}
@@ -62,7 +88,7 @@ export function Header({ path }: { path: string }) {
   )
 }
 
-export function Footer({ data }: { data: Study }) {
+export function Footer({ data }: { data?: Study }) {
   return (
     <footer className="site-footer">
       <div className="footer-main">
@@ -77,7 +103,7 @@ export function Footer({ data }: { data: Study }) {
       </div>
       <div className="footer-bottom">
         <span>
-          Paper snapshot · {data.snapshotDate} · <code>{data.commit.slice(0, 7)}</code>
+          {data ? <>Paper snapshot · {data.snapshotDate} · <code>{data.commit.slice(0, 7)}</code></> : 'Aetherheart · Research & community'}
         </span>
         <span>Fracture Atlas · v0.1</span>
       </div>

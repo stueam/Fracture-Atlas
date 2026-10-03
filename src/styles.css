@@ -3630,3 +3630,37 @@ body {
     font-size: 13px;
   }
 }
+
+/* Community navigation retains all existing paper routes. */
+.explore-menu {
+  position: relative;
+  color: var(--muted);
+}
+.explore-menu summary {
+  cursor: pointer;
+  padding: 9px 12px;
+  font-size: 15px;
+}
+.explore-menu > div {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 190px;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+.explore-menu a {
+  display: block;
+}
+@media (max-width: 600px) {
+  .site-header nav {
+    flex-wrap: wrap;
+    display: flex;
+  }
+  .explore-menu > div {
+    z-index: 20;
+  }
+}

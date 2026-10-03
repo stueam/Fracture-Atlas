@@ -4,3 +4,8 @@ dist/
 *.log
 .DS_Store
 docs/screenshots/
+
+.env
+.env.*
+!.env.example
+supabase/.temp/

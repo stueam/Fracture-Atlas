@@ -10,6 +10,8 @@ import { BenchmarkDetail, BenchmarkRegistry } from './pages/Benchmarks'
 import Costs from './pages/Costs'
 import Diagnostics from './pages/Diagnostics'
 import Paper from './pages/Paper'
+import CommunityApp from './community/CommunityApp'
+import { communityEnabled } from './community/config'
 
 const getRoute = () => window.location.hash.replace(/^#/, '') || '/'
 
@@ -57,8 +59,12 @@ export default function App() {
         )[path]
     document.title = `${name || 'Page not found'} — Fracture Atlas`
   }, [path])
-  if (error)
-    return (
+  const communityRoute =
+    communityEnabled && /^\/(community|submit|submissions|account|admin)(\/|$)/.test(path)
+  let page
+  if (communityRoute) page = <CommunityApp key={path} path={path} />
+  else if (error)
+    page = (
       <div className="loading-page">
         <h1>Unable to load the research snapshot.</h1>
         <p>{error}</p>
@@ -68,15 +74,14 @@ export default function App() {
         </button>
       </div>
     )
-  if (!data)
-    return (
+  else if (!data)
+    page = (
       <div className="loading-page">
         <span className="loading-mark" />
         <p>Loading the capability map…</p>
       </div>
     )
-  let page
-  if (path === '/') page = <Home data={data} />
+  else if (path === '/') page = <Home data={data} />
   else if (path === '/results') page = <Results key={route} data={data} inspect={setInspection} />
   else if (path === '/benchmarks') page = <BenchmarkRegistry />
   else if (path.startsWith('/benchmarks/')) {
@@ -111,8 +116,8 @@ export default function App() {
           </div>
         )}
       </main>
-      <Footer data={data} />
-      {inspection && <RecordDrawer data={data} inspection={inspection} close={close} />}
+      <Footer data={data ?? undefined} />
+      {inspection && data && <RecordDrawer data={data} inspection={inspection} close={close} />}
     </>
   )
 }
