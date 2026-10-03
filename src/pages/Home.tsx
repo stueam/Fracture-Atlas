@@ -1,4 +1,4 @@
-import { ArrowRight, Fingerprint, Layers3, Coins } from 'lucide-react'
+import { ArrowRight, Fingerprint, Layers3, Coins, FileText } from 'lucide-react'
 import type { Study } from '../data'
 import { SectionTitle } from '../components/UI'
 import OverviewChart from '../components/OverviewChart'
@@ -26,6 +26,11 @@ export default function Home({ data }: { data: Study }) {
           Explore the capability gaps between smaller and frontier language models — and how five
           adaptation strategies change the picture.
         </p>
+        <div className="overview-paper-link">
+          <a className="button primary" href="#/paper">
+            <FileText size={18} /> Read paper <ArrowRight size={17} />
+          </a>
+        </div>
       </section>
       <div className="stat-strip">
         <div>

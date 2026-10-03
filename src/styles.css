@@ -94,6 +94,10 @@ p {
   position: relative;
   isolation: isolate;
 }
+.overview-paper-link {
+  margin-top: 24px;
+  animation: overview-enter 550ms 220ms ease-out both;
+}
 .overview-hero::before {
   content: '';
   position: absolute;

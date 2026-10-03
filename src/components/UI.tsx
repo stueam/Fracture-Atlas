@@ -38,12 +38,10 @@ export function Header({ path }: { path: string }) {
     ['/benchmarks', 'Benchmarks'],
     ['/costs', 'Costs'],
     ['/diagnostics', 'Diagnostics'],
-    ['/paper', 'Paper & resources'],
   ]
   const items = communityEnabled
     ? [
         ['/community', 'Community'],
-        ['/paper', 'Paper & resources'],
         ['/submit', 'Submit'],
         ['/account', 'Account'],
       ]
