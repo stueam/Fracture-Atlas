@@ -25,7 +25,8 @@ export default function HeroAtmosphere() {
       <div className="hero-ambient-field">
         <div className="hero-glow hero-glow-cool" />
         <div className="hero-glow hero-glow-warm" />
-        <svg className="hero-flow-mesh" viewBox="0 0 600 440">
+        <div className="hero-glow hero-glow-title" />
+        <svg className="hero-flow-mesh" viewBox="0 0 600 440" preserveAspectRatio="none">
           {Array.from({ length: 15 }, (_, i) => (
             <path
               key={i}

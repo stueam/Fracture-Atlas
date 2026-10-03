@@ -109,7 +109,7 @@ p {
 }
 .hero-atmosphere {
   position: absolute;
-  inset: 0;
+  inset: 0 -28px;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
@@ -118,16 +118,16 @@ p {
 .hero-ambient-field {
   position: absolute;
   inset: 0;
-  /* Keep the reading column quiet and fade out before the statistics/chart. */
+  /* Carry a softer field under the title, fading out above the statistics/chart. */
   mask-image:
-    linear-gradient(90deg, transparent 48%, black 82%),
-    linear-gradient(transparent, black 25%, black 60%, transparent 100%);
+    linear-gradient(90deg, #000a, #0008 42%, black 82%),
+    linear-gradient(transparent, black 20%, black 55%, transparent 98%);
   mask-composite: intersect;
 }
 .hero-glow {
   position: absolute;
-  width: 620px;
-  height: 430px;
+  width: 760px;
+  height: 490px;
   right: -80px;
   top: -40px;
   opacity: var(--ambient-strength);
@@ -135,14 +135,24 @@ p {
   animation: ambient-drift 9s ease-in-out infinite alternate;
 }
 .hero-glow-warm {
-  width: 470px;
-  height: 350px;
+  width: 580px;
+  height: 410px;
   right: -140px;
   top: 120px;
   background: radial-gradient(ellipse, var(--ambient-warm), transparent 68%);
   animation-duration: 11s;
   animation-delay: -5.5s;
   animation-direction: alternate-reverse;
+}
+.hero-glow-title {
+  width: 950px;
+  height: 470px;
+  left: -170px;
+  right: auto;
+  top: -105px;
+  opacity: calc(var(--ambient-strength) * 0.7);
+  animation-duration: 13s;
+  animation-delay: -6s;
 }
 @keyframes ambient-drift {
   from {
@@ -154,16 +164,19 @@ p {
 }
 .hero-flow-mesh {
   position: absolute;
-  width: 600px;
-  height: 440px;
-  right: -100px;
-  top: -10px;
+  width: calc(100% + 140px);
+  height: 520px;
+  right: -70px;
+  top: -65px;
   fill: none;
   stroke: var(--ambient-cool);
   stroke-width: 1;
   opacity: var(--ambient-mesh-strength);
   transform-origin: 70% 50%;
   animation: ambient-flow 10s ease-in-out infinite alternate;
+}
+.hero-flow-mesh path {
+  vector-effect: non-scaling-stroke;
 }
 @keyframes ambient-flow {
   from {
@@ -176,10 +189,10 @@ p {
 .fracture-motif {
   position: absolute;
   z-index: -1;
-  right: -12px;
-  top: 95px;
-  width: 290px;
-  height: 280px;
+  right: 16px;
+  top: 75px;
+  width: 340px;
+  height: 320px;
   overflow: hidden;
   pointer-events: none;
 }
@@ -240,11 +253,18 @@ p {
   animation-play-state: paused;
 }
 @media (max-width: 600px) {
+  .hero-atmosphere {
+    inset: 0 -20px;
+  }
   .hero-ambient-field {
     opacity: 0.5;
     mask-image:
-      linear-gradient(90deg, transparent 65%, black),
+      linear-gradient(90deg, #0008, black),
       linear-gradient(transparent, black 25%, black 60%, transparent);
+  }
+  .hero-glow-title {
+    width: 620px;
+    left: -240px;
   }
 }
 .overview-kicker,
