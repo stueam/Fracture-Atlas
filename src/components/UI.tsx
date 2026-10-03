@@ -23,7 +23,7 @@ export function Logo({ small = false }: { small?: boolean }) {
         <path d="M22 22h7v7h-7z" fill="#ed7651" />
       </svg>
       <span>
-        fracture<span className="brand-light"> atlas</span>
+        Fracture<span className="brand-light"> Atlas</span>
       </span>
     </a>
   )
