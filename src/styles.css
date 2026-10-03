@@ -268,15 +268,16 @@ p {
   scrollbar-color: #aebc9c transparent;
 }
 .atlas-general-chart {
-  min-width: 735px;
+  min-width: 780px;
   padding: 0 25px 14px;
 }
 .atlas-axis-row,
 .atlas-task-row {
   display: grid;
-  grid-template-columns: 205px minmax(290px, 1fr) 133px;
-  gap: 26px;
+  grid-template-columns: 220px minmax(290px, 1fr) 133px;
+  gap: 20px;
   align-items: center;
+  padding: 0 12px;
 }
 .atlas-axis-row {
   min-height: 50px;
@@ -295,15 +296,27 @@ p {
   text-align: right;
 }
 .atlas-task-row {
-  min-height: 66px;
-  border-top: 1px solid #e9eddf;
-  border-radius: 5px;
+  min-height: 94px;
+  margin-bottom: 8px;
+  border: 1px solid #d8dfcf;
+  border-radius: 8px;
+  background: #fdfdf8;
+  transition:
+    background 0.18s,
+    border-color 0.18s;
+}
+.atlas-task-row:nth-child(odd) {
+  background: #f0f2e9;
+}
+.atlas-task-row:hover,
+.atlas-task-row:focus-within {
+  background: #eaf0df;
+  border-color: #a6b697;
 }
 .atlas-task-row.selected {
-  background: #eff3e7;
-  box-shadow:
-    -10px 0 #eff3e7,
-    10px 0 #eff3e7;
+  background: #e4ecd8;
+  border-color: #8ca276;
+  box-shadow: inset 4px 0 #b95435;
 }
 .atlas-task-label,
 .atlas-endpoint,
@@ -312,17 +325,29 @@ p {
   padding: 10px 0;
   text-align: left;
 }
-.atlas-task-label strong {
+.atlas-task-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.atlas-task-index {
+  flex-shrink: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: #596451;
+}
+.atlas-task-name strong {
   display: block;
-  font-size: 15px;
+  font-size: 16px;
   color: #283128;
   font-weight: 550;
 }
-.atlas-task-label > span {
+.atlas-task-name > span {
   display: block;
   color: #596451;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .atlas-task-label:hover strong,
 .atlas-discovery-label:hover strong {
@@ -345,24 +370,24 @@ p {
   color: #596451;
 }
 .atlas-track {
-  height: 50px;
+  height: 68px;
   position: relative;
 }
 .atlas-track:before {
   content: '';
   position: absolute;
-  top: 24px;
+  top: 33px;
   left: 0;
   right: 0;
-  height: 2px;
-  background: #e6ebdd;
+  height: 1px;
+  background: #c8d1bd;
 }
 .atlas-gridline {
   position: absolute;
-  top: -8px;
-  bottom: -8px;
+  top: 0;
+  bottom: 0;
   width: 1px;
-  background: #dde5d4;
+  background: #d4deca;
 }
 .atlas-marker {
   position: absolute;
@@ -371,7 +396,7 @@ p {
   padding: 0;
   background: transparent;
   transform: translate(-50%, -50%);
-  top: 25px;
+  top: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -385,14 +410,14 @@ p {
   box-shadow: 0 0 0 2px #fdfdf8;
 }
 .atlas-marker.base {
-  top: 10px;
+  top: 13px;
 }
 .atlas-marker.base > span {
   background: #fdfdf8;
   border: 2px solid var(--series-color);
 }
 .atlas-marker.adapted {
-  top: 23px;
+  top: 27px;
   z-index: 4;
 }
 .atlas-marker.adapted > span {
@@ -402,10 +427,10 @@ p {
   height: 11px;
 }
 .atlas-marker.kimi {
-  top: 36px;
+  top: 41px;
 }
 .atlas-marker.deepseek {
-  top: 49px;
+  top: 55px;
 }
 .atlas-marker:hover > span,
 .atlas-marker:focus-visible > span {
@@ -451,7 +476,7 @@ p {
 }
 .atlas-track.native {
   margin-top: 14px;
-  margin-bottom: 22px;
+  margin-bottom: 28px;
 }
 .atlas-track.native .atlas-gridline {
   top: 5px;
@@ -461,7 +486,7 @@ p {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 55px;
+  top: 76px;
   width: 100%;
   color: #596451;
   font-size: 13px;

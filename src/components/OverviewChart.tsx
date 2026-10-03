@@ -63,7 +63,7 @@ function PlotTrack({
                 '--series-color': s.color,
               } as CSSProperties
             }
-            title={`${s.label}: ${metricValue(value, benchmark.name)}${native ? ' quality' : '%'}`}
+            title={`${benchmark.name} · ${s.label}: ${metricValue(value, benchmark.name)}${native ? ' quality' : '%'}`}
             aria-label={`${benchmark.name}, ${s.label}, ${metricValue(value, benchmark.name)}`}
             onClick={select}
           >
@@ -153,20 +153,27 @@ export default function OverviewChart({ data }: { data: Study }) {
               </div>
               <span>Best adaptation</span>
             </div>
-            {general.map((b) => {
+            {general.map((b, index) => {
               const adapted = overviewFor(data, b.name, model)?.best_tested_adaptation
               return (
                 <div
                   className={`atlas-task-row ${selected === b.name ? 'selected' : ''}`}
                   key={b.name}
+                  role="group"
+                  aria-label={`${b.name} benchmark`}
                 >
                   <button
                     className="atlas-task-label"
                     onClick={() => setSelected(b.name)}
                     aria-pressed={selected === b.name}
                   >
-                    <strong>{b.name}</strong>
-                    <span>{b.family}</span>
+                    <span className="atlas-task-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="atlas-task-name">
+                      <strong>{b.name}</strong>
+                      <span>{b.family}</span>
+                    </span>
                   </button>
                   <PlotTrack
                     data={data}
@@ -175,7 +182,11 @@ export default function OverviewChart({ data }: { data: Study }) {
                     references={references}
                     select={() => setSelected(b.name)}
                   />
-                  <button className="atlas-endpoint" onClick={() => setSelected(b.name)}>
+                  <button
+                    className="atlas-endpoint"
+                    onClick={() => setSelected(b.name)}
+                    aria-label={`${b.name}, best adaptation ${metricValue(adapted?.value, b.name)}`}
+                  >
                     <strong>{metricValue(adapted?.value, b.name)}</strong>
                     <span>{b.metric}</span>
                   </button>
