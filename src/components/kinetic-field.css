@@ -1,0 +1,211 @@
+.kinetic-field {
+  position: absolute;
+  width: 800px;
+  height: 700px;
+  right: -155px;
+  top: -100px;
+  pointer-events: none;
+  transform: translate(var(--field-x, 0px), var(--field-y, 0px));
+  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  mask-image: linear-gradient(90deg, transparent, #0005 24%, black 62%);
+}
+.kinetic-instrument {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.kinetic-ring,
+.kinetic-core,
+.kinetic-links {
+  stroke: var(--ambient-cool);
+  stroke-width: 1;
+}
+.kinetic-ring {
+  opacity: 0.6;
+}
+.kinetic-ring-outer {
+  animation: kinetic-turn 38s linear infinite;
+}
+.kinetic-ring-inner {
+  animation: kinetic-turn 22s linear infinite reverse;
+}
+.kinetic-dashes {
+  stroke-dasharray: 1 9;
+  stroke-width: 3;
+}
+.kinetic-arc {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+.kinetic-node {
+  fill: var(--accent);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+.kinetic-core {
+  animation: kinetic-turn 50s linear infinite;
+  opacity: 0.32;
+}
+.kinetic-wave {
+  stroke: var(--accent);
+  opacity: 0;
+  transform-origin: 0 0;
+  animation: kinetic-ripple 7s ease-out infinite;
+}
+.kinetic-wave-second {
+  animation-delay: -3.5s;
+}
+.kinetic-links {
+  opacity: 0.6;
+}
+.kinetic-link-pulse {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-dasharray: 0.1 0.9;
+  animation: kinetic-pulse 4s linear infinite;
+}
+.kinetic-halo {
+  position: absolute;
+  inset: 50px 40px;
+  background: radial-gradient(
+    ellipse,
+    transparent 24%,
+    color-mix(in srgb, var(--accent) 19%, transparent) 46%,
+    transparent 68%
+  );
+  animation: kinetic-breathe 6s ease-in-out infinite alternate;
+}
+.kinetic-scan {
+  position: absolute;
+  width: 380px;
+  height: 1px;
+  right: 20px;
+  top: 140px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  animation: kinetic-scan 7s ease-in-out infinite;
+}
+.hero-atmosphere .kinetic-field {
+  width: 760px;
+  right: -230px;
+  top: -70px;
+  opacity: 0.9;
+}
+.hero-atmosphere .fracture-motif {
+  width: 430px;
+  height: 405px;
+  right: -18px;
+  top: 105px;
+  opacity: 0.75;
+}
+.hero-atmosphere .hero-glow {
+  opacity: calc(var(--ambient-strength) * 1.45);
+  animation-duration: 7s;
+}
+.hero-atmosphere .hero-flow-mesh {
+  opacity: calc(var(--ambient-mesh-strength) * 1.65);
+  animation-duration: 8s;
+}
+.hero-atmosphere .fracture-pulse {
+  animation-duration: 4s;
+}
+.hero-atmosphere[data-running='false'] .kinetic-field *,
+.page-atmosphere[data-running='false'] .kinetic-field * {
+  animation-play-state: paused;
+}
+@keyframes kinetic-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes kinetic-ripple {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.45;
+  }
+  85%,
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+@keyframes kinetic-pulse {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes kinetic-breathe {
+  from {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+@keyframes kinetic-scan {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  80% {
+    transform: translateY(330px);
+    opacity: 0.25;
+  }
+  90% {
+    transform: translateY(380px);
+    opacity: 0;
+  }
+}
+@media (max-width: 800px) {
+  .kinetic-field {
+    right: -330px;
+    opacity: 0.6;
+  }
+  .hero-atmosphere .kinetic-field {
+    right: -380px;
+    opacity: 0.5;
+  }
+}
+@media (max-width: 600px) {
+  .kinetic-field {
+    width: 620px;
+    height: 540px;
+    top: -90px;
+    right: -380px;
+    opacity: 0.55;
+  }
+  .hero-atmosphere .kinetic-field {
+    right: -470px;
+    top: 0;
+  }
+  .kinetic-wave-second,
+  .kinetic-scan {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-field {
+    transform: none;
+    transition: none;
+  }
+  .kinetic-field *,
+  .hero-atmosphere * {
+    animation: none !important;
+  }
+  .kinetic-wave,
+  .kinetic-scan,
+  .kinetic-link-pulse {
+    display: none;
+  }
+}

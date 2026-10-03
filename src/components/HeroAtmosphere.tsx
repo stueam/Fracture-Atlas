@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import KineticField from './KineticField'
 
 /** Decorative motion stays inside the hero and sleeps when it leaves the viewport. */
 export default function HeroAtmosphere() {
@@ -22,6 +23,7 @@ export default function HeroAtmosphere() {
 
   return (
     <div className="hero-atmosphere" ref={layer} data-running={running} aria-hidden="true">
+      <KineticField />
       <div className="hero-ambient-field">
         <div className="hero-glow hero-glow-cool" />
         <div className="hero-glow hero-glow-warm" />
