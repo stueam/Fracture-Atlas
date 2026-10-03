@@ -57,12 +57,21 @@ export default function App() {
             '/paper': 'Paper & resources',
           } as Record<string, string>
         )[path]
-    document.title = `${name || 'Page not found'} — Fracture Atlas`
+    const communityTitle = /^\/(community|submit|submissions|account|admin)(\/|$)/.test(path)
+      ? path.startsWith('/admin')
+        ? 'Review workspace'
+        : path.startsWith('/submit')
+          ? 'Submit a contribution'
+          : path.startsWith('/account')
+            ? 'Your account'
+            : 'Community'
+      : undefined
+    document.title = `${name || communityTitle || 'Page not found'} — Fracture Atlas`
   }, [path])
   const communityRoute =
     communityEnabled && /^\/(community|submit|submissions|account|admin)(\/|$)/.test(path)
   let page
-  if (communityRoute) page = <CommunityApp key={path} path={path} />
+  if (communityRoute) page = <CommunityApp key={route} path={path} />
   else if (error)
     page = (
       <div className="loading-page">

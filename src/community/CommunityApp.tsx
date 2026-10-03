@@ -2,7 +2,7 @@ import { SubmissionList, SubmissionDetail } from './Submissions'
 import Submit from './Submit'
 import './community.css'
 import { Account } from './Auth'
-import { PageIntro } from '../components/UI'
+import { Catalog, PublicationDetail } from './Catalog'
 export default function CommunityApp({ path }: { path: string }) {
   if (path === '/account/submissions') return <SubmissionList />
   if (path === '/admin/reviews') return <SubmissionList admin />
@@ -12,16 +12,13 @@ export default function CommunityApp({ path }: { path: string }) {
   if (path === '/submit') return <Submit />
   if (/^\/submissions\/[^/]+\/edit$/.test(path)) return <Submit id={path.split('/')[2]} />
   if (path === '/account' || path === '/account/security') return <Account />
+  if (path === '/community') return <Catalog />
+  if (/^\/community\/publications\/[^/]+$/.test(path))
+    return <PublicationDetail id={path.split('/')[3]} />
   return (
-    <>
-      <PageIntro
-        eyebrow="Aetherheart � Community"
-        title={path.startsWith('/submit') ? 'Submit a contribution' : 'Community'}
-        text="Share benchmarks, adaptation methods, and reproducible results."
-      />
-      <div className="note">
-        Community submissions are being prepared. The published paper snapshot remains available.
-      </div>
-    </>
+    <div className="community-empty">
+      <h1>Page not found</h1>
+      <a href="#/community">Return to Community</a>
+    </div>
   )
 }
