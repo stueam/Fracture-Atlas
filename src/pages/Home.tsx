@@ -7,6 +7,26 @@ export default function Home({ data }: { data: Study }) {
   return (
     <>
       <section className="overview-hero">
+        <svg className="fracture-motif" viewBox="0 0 340 320" aria-hidden="true">
+          {Array.from({ length: 8 }, (_, i) => (
+            <g key={i} style={{ animationDelay: `${i * 45}ms` }}>
+              <path
+                className="fracture-line-left"
+                pathLength="1"
+                d={`M 10 ${105 + i * 25} L 80 ${65 + i * 25} H 136 L 158 ${32 + i * 25}`}
+              />
+              <path
+                className="fracture-line-right"
+                pathLength="1"
+                d={`M 178 ${43 + i * 25} L 200 ${10 + i * 25} H 256 L 330 ${-32 + i * 25}`}
+              />
+            </g>
+          ))}
+          <circle cx="80" cy="90" r="3" />
+          <circle cx="136" cy="165" r="3" />
+          <circle cx="200" cy="110" r="3" />
+          <circle cx="256" cy="185" r="3" />
+        </svg>
         <div className="overview-kicker">
           <span>Adaptation · Capability · Scale</span>
           <span>Research snapshot · {data.snapshotDate}</span>

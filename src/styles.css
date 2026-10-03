@@ -90,7 +90,98 @@ p {
   outline: none !important;
 }
 .overview-hero {
-  padding: 48px 0 36px;
+  padding: 52px 0 42px;
+  position: relative;
+  isolation: isolate;
+}
+.overview-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 -28px;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, transparent, var(--ink) 15%, transparent 95%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.fracture-motif {
+  position: absolute;
+  z-index: -1;
+  right: -12px;
+  top: 95px;
+  width: 290px;
+  height: 280px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.fracture-motif path {
+  fill: none;
+  stroke-width: 1.3;
+  stroke-dasharray: 1;
+  animation: fracture-reveal 650ms ease-out both;
+  animation-delay: inherit;
+}
+.fracture-motif g {
+  opacity: 0.5;
+}
+.fracture-line-left {
+  stroke: var(--series-kimi);
+}
+.fracture-line-right {
+  stroke: var(--accent);
+}
+.fracture-motif circle {
+  fill: var(--series-kimi);
+}
+.overview-kicker,
+.overview-hero h1,
+.overview-hero > p,
+.stat-strip > div {
+  animation: overview-enter 550ms ease-out both;
+}
+.overview-hero h1 {
+  animation-delay: 80ms;
+}
+.overview-hero > p {
+  animation-delay: 160ms;
+}
+.stat-strip > div:nth-child(1) {
+  animation-delay: 240ms;
+}
+.stat-strip > div:nth-child(2) {
+  animation-delay: 320ms;
+}
+.stat-strip > div:nth-child(3) {
+  animation-delay: 400ms;
+}
+.stat-strip > div:nth-child(4) {
+  animation-delay: 480ms;
+}
+@keyframes overview-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fracture-reveal {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (max-width: 1050px) {
+  .fracture-motif {
+    display: none;
+  }
 }
 .overview-kicker {
   display: flex;
@@ -119,7 +210,7 @@ p {
 }
 .overview-title-question {
   display: block;
-  max-width: 1000px;
+  max-width: 820px;
   font-size: clamp(38px, 4.5vw, 56px);
   text-wrap: balance;
 }
@@ -560,19 +651,22 @@ p {
   position: sticky;
   z-index: 20;
   top: 0;
-  background: var(--header-surface);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--line);
+  padding: 16px 24px 0;
+  background: linear-gradient(var(--paper), transparent);
 }
 .header-inner {
   max-width: 1320px;
   margin: auto;
   min-height: 84px;
-  padding: 16px 40px;
+  padding: 14px 20px;
   display: flex;
   gap: 18px;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--header-surface);
+  backdrop-filter: blur(18px);
 }
 .theme-toggle {
   display: inline-flex;
@@ -631,9 +725,8 @@ p {
 .site-header nav {
   display: flex;
   align-items: center;
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  background: var(--surface-soft);
+  border-radius: 12px;
+  background: transparent;
   padding: 4px;
   gap: 2px;
 }
@@ -642,7 +735,7 @@ p {
   font-size: 14px;
   font-weight: 500;
   color: var(--muted);
-  border-radius: 22px;
+  border-radius: 9px;
   white-space: nowrap;
 }
 .site-header nav a:hover {
@@ -3095,6 +3188,16 @@ body {
   }
   .overview-hero {
     padding: 31px 0 28px;
+  }
+  .overview-hero::before {
+    inset: 0 -20px;
+  }
+  .site-header {
+    padding: 12px 12px 0;
+  }
+  .header-inner {
+    padding: 12px;
+    gap: 10px;
   }
   .overview-kicker {
     flex-direction: column;
