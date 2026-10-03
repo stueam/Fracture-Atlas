@@ -1,0 +1,4 @@
+project_id = "fracture-atlas"
+
+[functions.validate-evidence]
+verify_jwt = true

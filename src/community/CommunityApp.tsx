@@ -1,6 +1,10 @@
+import Submit from './Submit'
+import './community.css'
 import { Account } from './Auth'
 import { PageIntro } from '../components/UI'
 export default function CommunityApp({ path }: { path: string }) {
+  if (path === '/submit') return <Submit />
+  if (/^\/submissions\/[^/]+\/edit$/.test(path)) return <Submit id={path.split('/')[2]} />
   if (path === '/account' || path === '/account/security') return <Account />
   return (
     <>
