@@ -2,6 +2,34 @@
 
 本版完成网站页面、数据库迁移、权限事务、附件验证函数及自动测试。**尚未创建或连接真实 Supabase 项目，也未完成真实 GitHub OAuth、Storage、Edge Function 端到端验收。** 未配置后端时，网站显示“Submissions are not open yet”，允许浏览表单，禁用登录、保存和提交。
 
+## 0. 第一次接入，按这个顺序
+
+1. 打开 [Supabase 控制台](https://supabase.com/dashboard)，在公司组织下新建项目，建议名称 `fracture-atlas`；保存数据库密码，选择适合主要用户的区域。先用 staging 验收再接生产。
+2. 在项目 Connect / Settings 中找到 Project URL、Project Ref 和 API publishable key。`https://abcd.supabase.co` 中的 `abcd` 即 Project Ref。这里只记录自己的真实值，不照抄占位符。
+3. 在网站目录执行第 2 节迁移命令。成功后应看到 public 下的 submissions、publications 等表、private.reviewers，以及私有 Storage bucket `submission-evidence`。
+4. 按第 3 节创建 GitHub **OAuth App**，推荐名称 `Fracture Atlas`，不勾选 Device Flow。将 Client ID 和 Client Secret 配到 Supabase 的 GitHub provider。
+5. 按第 4 节配置 GitHub 仓库的三个 Actions Variables。到 Actions → Deploy Fracture Atlas to GitHub Pages → Run workflow，选择 `main`。仅修改变量不会自动重新构建。
+6. 用两个不同 GitHub 账号登录网站，按第 5 节设置审核员并验证 TOTP，然后完成第 6 节的真实提交审核验收。
+
+网站登录不使用当前电脑的 Git SSH key，也不需要访问用户仓库；GitHub 验证身份，Supabase 管理本站会话和数据访问权限。拥有这个 GitHub 仓库的写权限不会自动成为网站审核员。
+
+| 信息                                   | 填到哪里                                               |
+| -------------------------------------- | ------------------------------------------------------ |
+| Supabase Project Ref                   | 本地 `supabase link --project-ref`                     |
+| Supabase Project URL                   | 仓库 Variable `VITE_SUPABASE_URL`                      |
+| Supabase publishable key               | 仓库 Variable `VITE_SUPABASE_PUBLISHABLE_KEY`          |
+| GitHub OAuth Client ID / Client Secret | Supabase Authentication → Sign In / Providers → GitHub |
+| 数据库密码                             | 仅本地 CLI 提示需要时输入；不放到前端                  |
+| 服务端 service-role / secret key       | 仅后端环境；不放到任何 `VITE_` 变量                    |
+
+两个重定向的方向如下：
+
+```text
+网站 → GitHub 授权 → Supabase /auth/v1/callback → 网站根路径 → Account / 原页面
+```
+
+GitHub 的 callback 为 `https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback`；Supabase 的 Site URL / Redirect URL 为 `https://stueam.github.io/Fracture-Atlas/`。正式值以项目控制台显示为准，不加 `#/account`。
+
 ## 1. 已实现的范围
 
 | 入口                           | 功能                                                 |
@@ -25,6 +53,7 @@
 在网站根目录执行以下命令（Supabase CLI 可通过官方 npm 包运行）：
 
 ```powershell
+Set-Location C:\Users\18041\Desktop\fracture-atlas
 npx supabase login
 npx supabase link --project-ref YOUR_PROJECT_REF
 npx supabase db push --dry-run
@@ -32,6 +61,8 @@ npx supabase db push
 npx supabase functions deploy validate-evidence
 npx supabase secrets set ALLOWED_ORIGINS=https://stueam.github.io
 ```
+
+这里连接托管项目，不需要启动本地 Docker 数据库。`db push --dry-run` 用于先确认待执行迁移；任何一步失败先处理该错误，不跳过继续开放前端。
 
 迁移顺序为 `supabase/migrations/` 下的三个 SQL 文件。它们创建表、RLS、受限 RPC、私有 bucket 和配额记录。**不要在普通 Pages 构建中自动执行生产数据库迁移。** 本仓库没有设置后端自动部署。
 
@@ -131,3 +162,19 @@ delete from private.reviewers where user_id = 'REVIEWER_UUID';
 `npm run test:community` 在 PGlite 的 PostgreSQL 引擎内执行全部迁移，使用 auth/storage 的测试替身验证角色与 RLS、冻结修订、幂等批准、版本替换、配额、引用与下架，以及 JSON/CSV 和字段校验。测试没有向生产插入记录。
 
 这不是 Supabase GoTrue、Storage HTTP、真实 OAuth 或 Edge Runtime 的集成测试。Docker daemon 当前不可用，未声称本地完整 Supabase 栈通过。正式开放前必须完成第 6 节。
+
+## 9. 常见接入问题
+
+| 现象                                | 先检查                                                                                                               |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 仍显示 Submissions are not open yet | 三个 Variables 的名字和值是否正确；是否重新运行了完整 Pages workflow；浏览器是否载入新版本                           |
+| GitHub 提示 redirect_uri 不匹配     | OAuth App 的 callback 应是 Supabase provider 给出的地址，而非 Pages URL                                              |
+| 登录后跳到 localhost / 错误页面     | Supabase Site URL、Redirect URLs 与生产完整路径是否一致，包括 `/Fracture-Atlas/`                                     |
+| PKCE code 失效                      | 在发起登录的同一个浏览器完成；重新从 Account 发起，不复用旧 callback 链接                                            |
+| relation / function not found       | 是否向同一个 Supabase 项目执行了全部迁移；前端 URL 是否指向该项目                                                    |
+| 附件验证 401                        | 登录会话是否过期；客户端 Authorization 应携带用户 session JWT，而不是把 publishable key 当用户 token；重新登录后再试 |
+| 附件验证失败或网络错误              | `validate-evidence` 是否部署，Function 环境变量是否齐全，CORS origin 是否为 `https://stueam.github.io`               |
+| 看不到审核队列 / 没有权限           | private.reviewers 中是否为该 Supabase 用户 UUID；是否已完成 TOTP 二次验证                                            |
+| 自己的提交不能批准                  | 这是禁止自审规则，由另一个已验证 MFA 的审核员处理                                                                    |
+
+不要为解决权限错误把 bucket 改成 public 或关闭 RLS。应核对具体会话、角色和迁移。参考 [函数 Authorization 与 apikey 的区别](https://supabase.com/docs/guides/functions/auth-headers) 及 [公开/服务端 API keys](https://supabase.com/docs/guides/getting-started/api-keys)。
