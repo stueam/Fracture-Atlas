@@ -12,6 +12,7 @@ import Diagnostics from './pages/Diagnostics'
 import Paper from './pages/Paper'
 import CommunityApp from './community/CommunityApp'
 import { communityEnabled } from './community/config'
+import PageAtmosphere from './components/PageAtmosphere'
 
 const getRoute = () => window.location.hash.replace(/^#/, '') || '/'
 
@@ -116,14 +117,17 @@ export default function App() {
       </a>
       <Header path={path} />
       <main id="main" className="main-content" tabIndex={-1}>
-        {page || (
-          <div className="empty-state">
-            <h1>Page not found.</h1>
-            <a className="button primary" href="#/">
-              Back to the atlas <ArrowRight size={15} />
-            </a>
-          </div>
-        )}
+        {path !== '/' && <PageAtmosphere path={path} />}
+        <div className={path === '/' ? undefined : 'page-scene'} key={path}>
+          {page || (
+            <div className="empty-state">
+              <h1>Page not found.</h1>
+              <a className="button primary" href="#/">
+                Back to the atlas <ArrowRight size={15} />
+              </a>
+            </div>
+          )}
+        </div>
       </main>
       <Footer data={data ?? undefined} />
       {inspection && data && <RecordDrawer data={data} inspection={inspection} close={close} />}

@@ -1,0 +1,249 @@
+.main-content {
+  position: relative;
+  isolation: isolate;
+}
+.page-atmosphere {
+  position: fixed;
+  inset: 85px 0 0;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  /* Keep a quiet center for data; visible motion lives above and beside it. */
+  mask-image: linear-gradient(to bottom, #000 0, #000 260px, #0005 530px, transparent 800px);
+}
+.page-aura {
+  position: absolute;
+  width: 850px;
+  height: 550px;
+  opacity: var(--ambient-strength);
+  background: radial-gradient(ellipse, var(--ambient-cool), transparent 68%);
+  animation: page-aura-drift 12s ease-in-out infinite alternate;
+}
+.page-aura-primary {
+  top: -270px;
+  right: -150px;
+}
+.page-aura-secondary {
+  top: 50px;
+  left: -550px;
+  background: radial-gradient(ellipse, var(--ambient-warm), transparent 68%);
+  animation-delay: -6s;
+  animation-direction: alternate-reverse;
+}
+.page-signal-field {
+  position: absolute;
+  width: min(900px, 90vw);
+  height: 600px;
+  right: -110px;
+  top: -230px;
+  mask-image: linear-gradient(100deg, transparent, #0005 40%, #000 75%);
+}
+.page-contours {
+  stroke: var(--ambient-cool);
+  stroke-width: 1;
+  opacity: 0.3;
+}
+.page-signal {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.065 0.935;
+  animation: page-signal-travel 9s linear infinite;
+  opacity: 0.6;
+}
+.page-orbit {
+  stroke: var(--ambient-cool);
+  opacity: 0.25;
+}
+.page-orbit-rotor {
+  animation: page-orbit-turn 28s linear infinite;
+}
+.page-orbit-rotor path {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.page-orbit-rotor circle {
+  fill: var(--accent);
+  stroke: none;
+}
+.page-atmosphere[data-variant='benchmarks'] .page-orbit {
+  opacity: 0.55;
+}
+.page-atmosphere[data-variant='community'] .page-signal-field {
+  right: -230px;
+  top: -190px;
+}
+.page-atmosphere[data-variant='submit'] .page-signal-field,
+.page-atmosphere[data-variant='account'] .page-signal-field,
+.page-atmosphere[data-variant='submissions'] .page-signal-field,
+.page-atmosphere[data-variant='admin'] .page-signal-field {
+  opacity: 0.65;
+}
+.page-edge-stream {
+  position: absolute;
+  width: 1px;
+  height: 75vh;
+  top: 120px;
+  background: var(--line);
+  opacity: 0.65;
+  overflow: hidden;
+}
+.page-edge-left {
+  left: max(12px, calc((100vw - 1240px) / 2));
+}
+.page-edge-right {
+  right: max(12px, calc((100vw - 1240px) / 2));
+}
+.page-edge-stream::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 130px;
+  background: linear-gradient(transparent, var(--accent), transparent);
+  animation: page-edge-travel 8s linear infinite;
+}
+.page-edge-right::after {
+  animation-delay: -4s;
+}
+.page-scene :is(.page-intro, .community-heading) {
+  animation: page-heading-arrive 0.6s ease-out;
+}
+.page-scene
+  > :is(.registry-toolbar, .filter-bar, .paper-feature, .task-overview, .diagnostic-tabs) {
+  animation: page-content-arrive 0.65s ease-out;
+}
+.page-scene :is(.registry-card, .resource-card, .publication-card, .contribution-kinds > button) {
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+@media (hover: hover) {
+  .page-scene :is(.registry-card, .resource-card, .publication-card):hover,
+  .page-scene .contribution-kinds > button:not(:disabled):hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 30px var(--shadow);
+  }
+}
+.page-scene .registry-card {
+  animation: page-card-arrive 0.55s ease-out backwards;
+}
+.page-scene .registry-card:nth-child(3n + 2) {
+  animation-delay: 70ms;
+}
+.page-scene .registry-card:nth-child(3n) {
+  animation-delay: 140ms;
+}
+.page-scene .paper-sheet {
+  animation: page-paper-float 8s ease-in-out infinite alternate;
+}
+.page-atmosphere[data-running='false'] *,
+.page-atmosphere[data-running='false'] *::after,
+.main-content:has(.page-atmosphere[data-running='false']) .paper-sheet {
+  animation-play-state: paused;
+}
+@keyframes page-aura-drift {
+  from {
+    transform: translate(-70px, 20px) scale(0.9);
+  }
+  to {
+    transform: translate(85px, 80px) scale(1.15);
+  }
+}
+@keyframes page-signal-travel {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes page-orbit-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes page-edge-travel {
+  from {
+    transform: translateY(-130px);
+  }
+  to {
+    transform: translateY(75vh);
+  }
+}
+@keyframes page-heading-arrive {
+  from {
+    opacity: 0.3;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes page-content-arrive {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes page-card-arrive {
+  from {
+    opacity: 0.3;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes page-paper-float {
+  from {
+    transform: rotate(-5deg) translateY(0);
+  }
+  to {
+    transform: rotate(-2deg) translateY(-9px);
+  }
+}
+@media (max-width: 600px) {
+  .page-atmosphere {
+    inset: 140px 0 0;
+  }
+  .page-signal-field {
+    width: 620px;
+    right: -360px;
+    opacity: 0.6;
+  }
+  .page-atmosphere[data-variant='community'] .page-signal-field {
+    right: -390px;
+  }
+  .page-aura {
+    opacity: calc(var(--ambient-strength) * 0.7);
+  }
+  .page-edge-stream {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-atmosphere *,
+  .page-atmosphere *::after,
+  .page-scene *,
+  .overview-paper-link {
+    animation: none !important;
+  }
+  .page-scene * {
+    transition: none !important;
+  }
+  .page-signal,
+  .page-edge-stream::after {
+    display: none;
+  }
+  .page-scene
+    :is(.registry-card, .resource-card, .publication-card, .contribution-kinds > button):hover {
+    transform: none;
+  }
+}
