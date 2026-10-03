@@ -172,6 +172,7 @@ export interface OverviewRecord {
   caveat: boolean
   method_label: string | null
   selected_method: Candidate | null
+  best_tested_adaptation?: Candidate | null
   candidates: Candidate[]
   baseline_raw: string | null
   baseline_source_line: number | null
