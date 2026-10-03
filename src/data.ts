@@ -324,3 +324,8 @@ export function sourceUrl(data: Study, path: string, line?: number | null) {
   return `${data.repository}/blob/${data.commit}/${path.split('/').map(encodeURIComponent).join('/')}${line ? `#L${line}` : ''}`
 }
 export const assetUrl = (path: string) => `${import.meta.env.BASE_URL}${path}`
+
+export function routeValue(key: string, allowed: readonly string[], fallback: string) {
+  const value = new URLSearchParams(window.location.hash.split('?')[1] || '').get(key)
+  return value && allowed.includes(value) ? value : fallback
+}

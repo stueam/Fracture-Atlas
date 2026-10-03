@@ -10,6 +10,7 @@ import {
   metricValue,
   number,
   methodFor,
+  routeValue,
 } from '../data'
 import type { CostRecord, Study } from '../data'
 import { MethodTag, ModelSelect, Note, PageIntro } from '../components/UI'
@@ -122,8 +123,14 @@ export default function Costs({
   data: Study
   inspect: (r: Inspection) => void
 }) {
-  const [benchmark, setBenchmark] = useState('Spider')
-  const [model, setModel] = useState<string>(MODELS[0])
+  const [benchmark, setBenchmark] = useState(() =>
+    routeValue(
+      'task',
+      BENCHMARKS.map((b) => b.name),
+      'Spider',
+    ),
+  )
+  const [model, setModel] = useState<string>(() => routeValue('model', MODELS, MODELS[0]))
   const records = data.costs.records.filter((r) => r.benchmark === benchmark && r.model === model)
   const aligned = records.filter((r) => {
     const m = methodFor(data, benchmark, model, r.method)

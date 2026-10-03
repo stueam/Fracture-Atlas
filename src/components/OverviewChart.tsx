@@ -234,7 +234,7 @@ export default function OverviewChart({ data }: { data: Study }) {
           </div>
           <a
             className="button secondary"
-            href={`#/benchmarks/${benchmark.slug}`}
+            href={`#/benchmarks/${benchmark.slug}?model=${encodeURIComponent(model)}`}
           >
             Open benchmark <ArrowRight size={16} />
           </a>

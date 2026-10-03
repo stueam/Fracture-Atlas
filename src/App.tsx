@@ -11,10 +11,11 @@ import Costs from './pages/Costs'
 import Diagnostics from './pages/Diagnostics'
 import Paper from './pages/Paper'
 
-const getPath = () => window.location.hash.replace(/^#/, '').split('?')[0].replace(/\/$/, '') || '/'
+const getRoute = () => window.location.hash.replace(/^#/, '') || '/'
 
 export default function App() {
-  const [path, setPath] = useState(getPath)
+  const [route, setRoute] = useState(getRoute)
+  const path = route.split('?')[0].replace(/\/$/, '') || '/'
   const [data, setData] = useState<Study | null>(null)
   const [error, setError] = useState('')
   const [inspection, setInspection] = useState<Inspection | null>(null)
@@ -34,7 +35,7 @@ export default function App() {
   }, [])
   useEffect(() => {
     const onHash = () => {
-      setPath(getPath())
+      setRoute(getRoute())
       setInspection(null)
       window.scrollTo({ top: 0 })
     }
@@ -76,20 +77,15 @@ export default function App() {
     )
   let page
   if (path === '/') page = <Home data={data} />
-  else if (path === '/results') page = <Results data={data} inspect={setInspection} />
+  else if (path === '/results') page = <Results key={route} data={data} inspect={setInspection} />
   else if (path === '/benchmarks') page = <BenchmarkRegistry />
   else if (path.startsWith('/benchmarks/')) {
     const benchmark = BENCHMARKS.find((b) => path === `/benchmarks/${b.slug}`)
     if (benchmark)
       page = (
-        <BenchmarkDetail
-          key={benchmark.slug}
-          benchmark={benchmark}
-          data={data}
-          inspect={setInspection}
-        />
+        <BenchmarkDetail key={route} benchmark={benchmark} data={data} inspect={setInspection} />
       )
-  } else if (path === '/costs') page = <Costs data={data} inspect={setInspection} />
+  } else if (path === '/costs') page = <Costs key={route} data={data} inspect={setInspection} />
   else if (path === '/diagnostics') page = <Diagnostics data={data} />
   else if (path === '/paper') page = <Paper data={data} />
   return (

@@ -9,6 +9,7 @@ import {
   metricValue,
   overviewFor,
   matchedFor,
+  routeValue,
 } from '../data'
 import type { Benchmark, Study } from '../data'
 import { MethodTag, ModelSelect, Note, PageIntro, SectionTitle } from '../components/UI'
@@ -91,7 +92,7 @@ export function BenchmarkDetail({
   data: Study
   inspect: (record: Inspection) => void
 }) {
-  const [model, setModel] = useState<string>(MODELS[0])
+  const [model, setModel] = useState<string>(() => routeValue('model', MODELS, MODELS[0]))
   const baseline = overviewFor(data, b.name, model)
   const available = METHODS.map((m) => methodFor(data, b.name, model, m)).filter(
     (r) => r?.value !== null && r?.value !== undefined && !r?.exclusion,
@@ -205,10 +206,13 @@ export function BenchmarkDetail({
           <h3>Put this task in context.</h3>
           <p>Inspect recorded costs or compare the full method matrix.</p>
         </div>
-        <a href="#/costs" className="button secondary">
+        <a
+          href={`#/costs?model=${encodeURIComponent(model)}&task=${encodeURIComponent(b.name)}`}
+          className="button secondary"
+        >
           Cost explorer <ArrowRight size={15} />
         </a>
-        <a href="#/results" className="button primary">
+        <a href={`#/results?model=${encodeURIComponent(model)}`} className="button primary">
           All results <ArrowUpRight size={15} />
         </a>
       </div>

@@ -9,6 +9,7 @@ import {
   methodFor,
   metricValue,
   number,
+  routeValue,
 } from '../data'
 import type { MethodRecord, Study } from '../data'
 import { MethodTag, ModelSelect, Note, PageIntro } from '../components/UI'
@@ -21,7 +22,7 @@ export default function Results({
   data: Study
   inspect: (record: Inspection) => void
 }) {
-  const [model, setModel] = useState<string>(MODELS[0])
+  const [model, setModel] = useState<string>(() => routeValue('model', MODELS, MODELS[0]))
   const [view, setView] = useState<'endpoint' | 'matched'>('endpoint')
   const [query, setQuery] = useState('')
   const [family, setFamily] = useState('All families')
@@ -192,7 +193,10 @@ export default function Results({
             {benchmarks.map((b) => (
               <tr key={b.name}>
                 <td>
-                  <a className="benchmark-name" href={`#/benchmarks/${b.slug}`}>
+                  <a
+                    className="benchmark-name"
+                    href={`#/benchmarks/${b.slug}?model=${encodeURIComponent(model)}`}
+                  >
                     {b.name}
                     <ArrowUpRight size={12} />
                   </a>
