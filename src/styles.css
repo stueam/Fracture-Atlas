@@ -585,16 +585,6 @@ p {
   color: #283128;
   box-shadow: 0 1px 4px #28312812;
 }
-.header-source {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: 550;
-}
-.header-source:hover {
-  color: var(--accent);
-}
 .button {
   display: inline-flex;
   align-items: center;
@@ -2176,21 +2166,6 @@ tbody tr:hover {
   font-size: 14px;
   color: #596451;
 }
-.footer-links {
-  display: flex;
-  gap: 26px;
-  margin-left: auto;
-}
-.footer-links a {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10px;
-  color: #7e9a65;
-}
-.footer-links a:hover {
-  color: #4e7438;
-}
 .footer-bottom {
   max-width: 1144px;
   margin: 35px auto 0;
@@ -2273,9 +2248,6 @@ tbody tr:hover {
     padding: 9px 10px;
     font-size: 14px;
   }
-  .header-source span {
-    display: none;
-  }
   .brand {
     font-size: 20px;
   }
@@ -2298,9 +2270,6 @@ tbody tr:hover {
   .footer-main {
     gap: 30px;
   }
-  .footer-links {
-    gap: 17px;
-  }
 }
 @media (max-width: 860px) {
   .header-inner {
@@ -2310,9 +2279,6 @@ tbody tr:hover {
   }
   .header-inner .brand {
     flex: 1;
-  }
-  .header-source {
-    order: 1;
   }
   .site-header nav {
     order: 2;
@@ -2425,11 +2391,6 @@ tbody tr:hover {
   .footer-main {
     flex-wrap: wrap;
   }
-  .footer-links {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 2px;
-  }
   .page-intro {
     align-items: flex-start;
   }
@@ -2459,9 +2420,6 @@ tbody tr:hover {
   .site-header nav a {
     padding: 9px 5px;
     font-size: 14px;
-  }
-  .header-source {
-    font-size: 11px;
   }
   .button {
     padding: 12px 14px;
@@ -2855,13 +2813,6 @@ tbody tr:hover {
   .footer-main p {
     font-size: 14px;
   }
-  .footer-links {
-    gap: 13px;
-    flex-wrap: wrap;
-  }
-  .footer-links a {
-    font-size: 9px;
-  }
   .footer-bottom {
     gap: 15px;
     font-size: 14px;
@@ -2922,6 +2873,7 @@ tbody tr:hover {
 .rule-description {
   color: #596451;
 }
+
 /* Readable type hierarchy across the research pages. */
 body {
   font-size: 16px;
@@ -3020,6 +2972,7 @@ body {
 .method-card strong {
   font-size: 32px;
 }
+
 @media (max-width: 1000px) {
   .stat-strip {
     grid-template-columns: repeat(2, 1fr);

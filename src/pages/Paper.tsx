@@ -8,7 +8,7 @@ export default function Paper({ data }: { data: Study }) {
     <>
       <PageIntro
         eyebrow="Paper & open research"
-        title="Read. Inspect. Reproduce."
+        title="Paper & resources"
         text="The paper, source repository, and the exact data snapshot behind this website."
       />
       <section className="paper-feature">
@@ -111,16 +111,20 @@ export default function Paper({ data }: { data: Study }) {
           </a>
         </div>
         <div className="source-list">
-          {Object.entries(data.sources).map(([key, source]) => (
-            <a key={key} href={sourceUrl(data, source.path)} target="_blank" rel="noreferrer">
-              <div>
-                <b>{key === 'paper' ? 'Paper PDF' : key.charAt(0).toUpperCase() + key.slice(1)}</b>
-                <span>{source.path}</span>
-                <code>SHA-256 · {source.sha256.slice(0, 16)}…</code>
-              </div>
-              <ArrowUpRight size={16} />
-            </a>
-          ))}
+          {Object.entries(data.sources)
+            .filter(([key]) => key !== 'paper')
+            .map(([key, source]) => (
+              <a key={key} href={sourceUrl(data, source.path)} target="_blank" rel="noreferrer">
+                <div>
+                  <b>
+                    {key === 'paper' ? 'Paper PDF' : key.charAt(0).toUpperCase() + key.slice(1)}
+                  </b>
+                  <span>{source.path}</span>
+                  <code>SHA-256 · {source.sha256.slice(0, 16)}…</code>
+                </div>
+                <ArrowUpRight size={16} />
+              </a>
+            ))}
         </div>
         <Note>
           Data and the PDF are included with this site, so they remain readable without GitHub

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
-import { ArrowUpRight, Check, ChevronDown, FileText, GitFork, Info, X } from 'lucide-react'
+import { ArrowUpRight, Check, ChevronDown, FileText, Info, X } from 'lucide-react'
 import {
   MODELS,
   METHOD_COLORS,
@@ -36,7 +36,7 @@ export function Header({ path }: { path: string }) {
     ['/benchmarks', 'Benchmarks'],
     ['/costs', 'Costs'],
     ['/diagnostics', 'Diagnostics'],
-    ['/paper', 'Paper'],
+    ['/paper', 'Paper & resources'],
   ]
   return (
     <header className="site-header">
@@ -55,16 +55,6 @@ export function Header({ path }: { path: string }) {
             </a>
           ))}
         </nav>
-        <a
-          className="header-source"
-          href="https://github.com/AetherHeart-AI/Fracture"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <GitFork size={16} />
-          <span>Source</span>
-          <ArrowUpRight size={14} />
-        </a>
       </div>
     </header>
   )
@@ -79,24 +69,10 @@ export function Footer({ data }: { data: Study }) {
           A map of what adaptation can change.
           <br />A Fracture research project.
         </p>
-        <div className="footer-links">
-          <a href={assetUrl('paper.pdf')} target="_blank" rel="noreferrer">
-            Read the paper <ArrowUpRight size={13} />
-          </a>
-          <a href={data.repository} target="_blank" rel="noreferrer">
-            Research repository <ArrowUpRight size={13} />
-          </a>
-          <a href={assetUrl('data/study.json')} download>
-            Download snapshot <ArrowUpRight size={13} />
-          </a>
-        </div>
       </div>
       <div className="footer-bottom">
         <span>
-          Paper snapshot · {data.snapshotDate} ·{' '}
-          <a href={`${data.repository}/commit/${data.commit}`} target="_blank" rel="noreferrer">
-            {data.commit.slice(0, 7)}
-          </a>
+          Paper snapshot · {data.snapshotDate} · <code>{data.commit.slice(0, 7)}</code>
         </span>
         <span>Fracture Atlas · v0.1</span>
       </div>
@@ -197,7 +173,7 @@ export function PaperLink({ className = 'button primary' }: { className?: string
   return (
     <a className={className} href={assetUrl('paper.pdf')} target="_blank" rel="noreferrer">
       <FileText size={16} />
-      Read the paper
+      Open paper (PDF)
       <ArrowUpRight size={16} />
     </a>
   )
