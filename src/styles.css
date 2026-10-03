@@ -115,6 +115,18 @@ p {
   letter-spacing: -2.8px;
   line-height: 1.12;
 }
+.overview-title-name {
+  display: block;
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.overview-title-question {
+  display: block;
+  max-width: 1000px;
+  font-size: clamp(38px, 4.5vw, 56px);
+  text-wrap: balance;
+}
 .overview-hero h1 em {
   font-style: normal;
   color: #b95435;
@@ -3036,6 +3048,14 @@ body {
   .overview-hero h1 {
     font-size: 39px;
     letter-spacing: -1.8px;
+  }
+  .overview-title-name {
+    font-size: clamp(38px, 10vw, 48px);
+    margin-bottom: 15px;
+  }
+  .overview-title-question {
+    font-size: 32px;
+    line-height: 1.18;
   }
   .overview-hero > p {
     font-size: 16px;

@@ -8,13 +8,14 @@ export default function Home({ data }: { data: Study }) {
     <>
       <section className="overview-hero">
         <div className="overview-kicker">
-          <span>FRACTURE ATLAS</span>
+          <span>Adaptation · Capability · Scale</span>
           <span>Research snapshot · {data.snapshotDate}</span>
         </div>
         <h1>
-          Can adaptation substitute
-          <br />
-          for <em>model scale?</em>
+          <span className="overview-title-name">Fracture Atlas:</span>{' '}
+          <span className="overview-title-question">
+            Can Adaptation Substitute for <em>Model Scale?</em>
+          </span>
         </h1>
         <p>
           Explore the capability gaps between smaller and frontier language models — and how five
