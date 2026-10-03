@@ -10,7 +10,7 @@
     "format": "prettier --write src vite.config.ts index.html README.md docs",
     "check:data": "python scripts/validate_data.py",
     "sync:data": "python scripts/sync_data.py",
-    "test:community": "node --test tests/community-db.test.mjs"
+    "test:community": "node --test tests/community-db.test.mjs && tsx --test tests/community-validation.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",

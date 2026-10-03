@@ -380,7 +380,8 @@ function ProtocolResults({ benchmark }: { benchmark: Publication }) {
   const hi = present(benchmark.payload.maximum)
     ? Number(benchmark.payload.maximum)
     : Math.max(...scores, lo + 1)
-  const pct = (v: unknown) => Math.max(0, Math.min(100, ((Number(v) - lo) / (hi - lo)) * 100))
+  const pct = (v: unknown) =>
+    hi === lo ? 50 : Math.max(0, Math.min(100, ((Number(v) - lo) / (hi - lo)) * 100))
   return (
     <section className="community-card protocol-results">
       <h2>Results on this protocol</h2>

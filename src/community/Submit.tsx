@@ -240,6 +240,8 @@ export default function Submit({ id }: { id?: string }) {
     const issues = validate(kind, payload)
     setErrors(issues)
     if (Object.keys(issues).length) {
+      const first = fieldsFor(kind).find((f) => issues[f.key])
+      if (first) setStep(first.step)
       setMessage('Check the highlighted fields before submitting.')
       return
     }

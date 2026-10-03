@@ -497,6 +497,16 @@ function Detail({ id, admin }: { id: string; admin: boolean }) {
                   <button className="button primary" disabled={busy}>
                     {busy ? 'Saving…' : 'Save decision'}
                   </button>
+                  <button
+                    type="button"
+                    className="button secondary"
+                    disabled={busy || message.trim().length < 3}
+                    onClick={() =>
+                      run(() => rpc('release_review', { p_id: id, p_reason: message }))
+                    }
+                  >
+                    Release review with this reason
+                  </button>
                 </form>
               ) : (
                 <p>
@@ -512,6 +522,29 @@ function Detail({ id, admin }: { id: string; admin: boolean }) {
                     <p key={i}>{n.message}</p>
                   ))}
                 </>
+              )}
+              {!own && !assigned && record.status === 'in_review' && (
+                <details>
+                  <summary>Recover a review after role revocation</summary>
+                  <p>This works only if the assigned reviewer no longer has review access.</p>
+                  <label className="community-field">
+                    Reason
+                    <textarea
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      maxLength={4000}
+                    />
+                  </label>
+                  <button
+                    className="button secondary"
+                    disabled={busy || message.trim().length < 3}
+                    onClick={() =>
+                      run(() => rpc('release_review', { p_id: id, p_reason: message }))
+                    }
+                  >
+                    Return to queue
+                  </button>
+                </details>
               )}
             </>
           ) : (

@@ -13,6 +13,7 @@ test('import handles quoted CSV and does not import consent', () => {
   assert.throws(() => parseImport('{"owner_id":"other"}', 'json', 'result'), /Unknown field/)
   assert.throws(() => parseImport('title\nA\nB', 'csv', 'result'), /one header/)
   assert.throws(() => parseImport('{"title":{}}', 'json', 'benchmark'), /Invalid value/)
+  assert.throws(() => parseImport('title, title\nA,B', 'csv', 'method'), /unique/)
 })
 test('missing scores, unknown cost, unmatched baseline and invalid bounds remain distinct', () => {
   const p = {
@@ -40,4 +41,5 @@ test('missing scores, unknown cost, unmatched baseline and invalid bounds remain
   assert.ok(validate('result', { ...p, cost_usd: '-1' }).cost_usd)
   assert.ok(validate('result', { ...p, source_url: 'javascript:alert(1)' }).source_url)
   assert.ok(validate('benchmark', { ...p, minimum: '10', maximum: '1' }).maximum)
+  assert.ok(validate('result', { ...p, run_date: '2026-02-30' }).run_date)
 })

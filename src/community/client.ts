@@ -6,7 +6,9 @@ const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || ''
 function publicKey(value: string) {
   if (value.startsWith('sb_publishable_')) return true
   try {
-    return JSON.parse(atob(value.split('.')[1])).role === 'anon'
+    return (
+      JSON.parse(atob(value.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).role === 'anon'
+    )
   } catch {
     return false
   }
@@ -29,7 +31,7 @@ export const client =
 
 export function safeReturn(value: string | null) {
   return value &&
-    /^\/(submit|submissions|account|admin|community)(\/|$)/.test(value) &&
+    /^\/(submit|submissions|account|admin|community)(\/|\?|$)/.test(value) &&
     !value.includes('://')
     ? value
     : '/account'

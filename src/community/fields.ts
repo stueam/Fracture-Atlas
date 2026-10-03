@@ -197,6 +197,7 @@ export function validate(kind: Kind, p: Payload): Record<string, string> {
       p.run_date &&
       (!/^\d{4}-\d{2}-\d{2}$/.test(String(p.run_date)) ||
         Number.isNaN(Date.parse(String(p.run_date))) ||
+        new Date(String(p.run_date)).toISOString().slice(0, 10) !== String(p.run_date) ||
         String(p.run_date) > new Date().toISOString().slice(0, 10))
     )
       errors.run_date = 'Use a valid past or current date.'
@@ -241,7 +242,7 @@ export function parseImport(text: string, format: 'json' | 'csv', kind: Kind): P
         'Use one header row and one aggregate experiment row. Attach per-run logs as evidence.',
       )
     if (
-      new Set(nonempty[0]).size !== nonempty[0].length ||
+      new Set(nonempty[0].map((h) => h.trim())).size !== nonempty[0].length ||
       nonempty[0].length !== nonempty[1].length
     )
       throw Error('CSV columns must be unique and match the data row.')
